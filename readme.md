@@ -49,7 +49,7 @@ To instasiate a basic MMMSEGUI you need:
 
 * `this.autooutput` by default, to get the graph to output the list to send to a `curve~` object you need to send a `bang` message to it (hence the `metro` setupt in the demo Maxpat file). If this option is set to `true`, the graph will output the current list whenever you change anything in the graph.
 
-The default MMSEGUI only contains two nodes, the end and start nodes. These cannot be deleted and only their Y position (and curve shape) can be changed. To add mode nodes (or delete them) you need to use the mouse (and keyboard).
+The default MMSEGUI only contains two nodes, the end and start nodes. These cannot be deleted and only their Y position (and curve shape) can be changed. To add more nodes (or delete them) you need to use the mouse (and keyboard).
 
 #### Adding, Deleting and Moving
 
