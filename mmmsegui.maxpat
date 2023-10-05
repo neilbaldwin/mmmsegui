@@ -12,7 +12,7 @@
 		"classnamespace" : "box",
 		"rect" : [ 47.0, 79.0, 887.0, 687.0 ],
 		"bglocked" : 0,
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -102,7 +102,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 159.0, 358.0, 150.0, 74.0 ],
+					"patching_rect" : [ 159.0, 358.0, 153.0, 74.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 388.0, 729.0, 20.0 ],
 					"text" : "Instance Parameters: a few examples of how to define @-style parameters which affect how the graph is initially rendered."
@@ -116,7 +116,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 68.0, 338.0, 150.0, 221.0 ],
+					"patching_rect" : [ 68.0, 338.0, 151.0, 221.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 19.0, 426.0, 729.0, 47.0 ],
@@ -178,10 +178,10 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 506.0, 446.0, 150.0, 78.0 ],
+					"patching_rect" : [ 506.0, 446.0, 153.0, 78.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
-					"presentation_rect" : [ 484.0, 36.5, 165.0, 64.0 ],
+					"presentation_rect" : [ 484.0, 36.5, 168.0, 64.0 ],
 					"text" : "Set instance parameters. See text below. The graph will reset when you change these."
 				}
 
@@ -325,16 +325,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-2",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 82.0, 467.0, 392.0, 35.0 ],
+					"patching_rect" : [ 82.0, 467.0, 392.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 19.0, 292.0, 463.0, 35.0 ],
-					"text" : "0 0 0 0.54761 163.188101 0. 0.329284 414.839715 0.835847 0.797748 219.719762 0. 1 202.252423 0."
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 19.0, 292.0, 463.0, 49.0 ],
+					"text" : "0 0 0 0.378774 337.316583 0.542171 0.625299 190.962054 0.689009 0.846338 162.305938 -0.412276 0.429583 73.550831 -0.384038 0.872696 100.006588 0.321914 0.875628 135.858006 0."
 				}
 
 			}
@@ -653,14 +653,14 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "mmmsegui.js",
-				"bootpath" : "~/Sync/Max/PLAYGROUND/bufferadsr",
+				"bootpath" : "~/Sync/Max/PLAYGROUND/MMMSEGUI",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "mmmsegui_class.js",
-				"bootpath" : "~/Sync/Max/PLAYGROUND/bufferadsr",
+				"bootpath" : "~/Sync/Max/PLAYGROUND/MMMSEGUI",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
