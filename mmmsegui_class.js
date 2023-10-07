@@ -2,7 +2,7 @@ autowatch = 1;
 //----------------------------------------------------------------------------
 // Mmmsegui Object Definition
 //----------------------------------------------------------------------------
-function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
+function Mmmsegui (jx, jy, jwidth, jheight, wp, ns, ts, autoout) {
 
   // Mouse-over highlighting : *slightly* faster if turned off!
   this.nodeHighlighting = true;
@@ -11,8 +11,9 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   this.autoOutput = autoout;
 
   // Scaled mouse delta values for updating node position etc.
-  this.mouseSpeed = 0.75
-  this.mouseDeltaResolution = 1.0 / jheight * this.mouseSpeed;
+  this.mouseSpeed = 1.0
+  this.mouseDeltaResolutionX = 1.0 / jwidth * this.mouseSpeed;
+  this.mouseDeltaResolutionY = 1.0 / jheight * this.mouseSpeed;
 
   // Init window variables
   this.wp = wp;
@@ -20,6 +21,7 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   this.handlesVisible = false;
 
   // Init mouse iterraction variables
+  this.mouseSegment = null;
   this.mouseCurve = null;
   this.mouseCurvePoint = null;
   this.mouseNode = null;
@@ -30,6 +32,10 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   this.MY = 0;
   this.DX = 0;
   this.DY = 0;
+  this.saveMouseX = 0;
+  this.saveMouseY = 0;
+  this.ox = 0;
+  this.oy = 0;
   this.outputFlag = false;
 
   // Init curve line and node handle variables
@@ -239,8 +245,9 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
 
   this.mouseOver = function(x,y) {
     if (this.autoHideHandles) { this.handlesVisible = true };
-    // Check nodes first
     this.mouseNode = null;
+    this.mouseSegment = null;
+    this.mouseCurvePoint = null;
     for (n = 0; n <= this.nodeCount-1; n++) {
       var curve = this.calcPixelCoordinates(n)
       if (( x > curve.sx-this.nodeSize) && (x < curve.sx+this.nodeSize)
@@ -249,17 +256,31 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       }
     }
 
-    // Determine which curve segment mouse point is over
-    this.mouseCurve = null;
+    if ((x < this.wp ) || (x > this.gw + this.wp) || (y < this.wp) || (y > this.gh + this.wp)) { 
+      return
+    };
+
+    // Determine which curve segment mouse pointer is over
     for (n = 0; n <= this.nodeCount - 2; n++) {
-      if ((x / this.gw) > this.nodeList[n].x) { this.mouseCurve = n };
+      if ((x / this.gw) > this.nodeList[n].x) { this.mouseSegment = n };
     }
-  
-    if (this.curveHighlighting) {
-      if ((this.mouseNode == null) && (this.mouseCurve != null)) {
-        this.mouseCurvePoint = this.isPointNearCurve(this.mouseCurve, x, y);
+
+    if (this.mouseSegment != null) {
+      this.mouseCurvePoint = this.isPointNearCurve(this.mouseSegment, x, y);
+      if ((this.mouseCurvePoint != null)) {
+        this.mouseCurve = this.mouseSegment;
       }
     }
+
+    return
+  }
+
+  this.getCurvePoint = function() {
+    if (this.clickedCurve == null) { return null }
+    var curve = this.calcPixelCoordinates(this.clickedCurve);
+    var curvePoint = this.calculateBezierPoint(curve.sx, curve.sy, 
+      curve.cx, curve.cy, curve.cx, curve.cy, curve.ex, curve.ey, this.mouseCurvePoint.t);
+    return curvePoint
   }
 
   // Detects if use has clicked on (near) a curve and returns the curve position if true
@@ -273,6 +294,7 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       var curvePoint = this.calculateBezierPoint(curve.sx, curve.sy, 
         curve.cx, curve.cy, curve.cx, curve.cy, curve.ex, curve.ey, t);
       var distance = Math.sqrt(Math.pow(curvePoint.x - x, 2) + Math.pow(curvePoint.y - y, 2));
+      curvePoint.t = t;
       if (distance <= lastDistance) {
         lastCurve = curvePoint;
         lastDistance = distance;
@@ -301,61 +323,85 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   }
 
   this.onClick = function(x,y, shift) {
+    // if ((x < this.wp ) || (x > this.gw + this.wp) || (y < this.wp) || (y > this.gh + this.wp)) { return };
     this.MX = x;
     this.MY = y;	
     this.clickedNode = null;
     this.clickedCurve = null;
-    
+    this.mouseCurvePoint = null;
+
     if (this.mouseNode != null) { this.clickedNode = this.mouseNode };
-  
-    if ((this.mouseNode == null) && (this.mouseCurve != null)) {
-      this.clickedCurve = this.mouseCurve;
-    }
   
     // If SHIFT and clicked node, delete that node
     if ((shift) && (this.clickedNode != null)) {
       this.deleteNode(this.clickedNode);
       this.clickedNode = null;
+      this.saveMouse();
       if (this.autoOutput) { this.outputFlag = true };
     }
-  
-    // If SHIFT and clicked curve, add new node at that point on curve
-    if ((shift) && (this.clickedCurve != null)) {
-      if (!this.curveHighlighting) {
-        this.mouseCurvePoint = this.isPointNearCurve(this.mouseCurve, x, y);
-      }
+
+    if ((this.mouseNode == null) && (this.mouseSegment != null)) {
+      this.mouseCurvePoint = this.isPointNearCurve(this.mouseCurve,x,y)
       if (this.mouseCurvePoint != null) {
+        this.clickedCurve = this.mouseCurve;
+      }
+    }
+
+    if ((shift) && (this.clickedCurve != null)) {
         var ax = (this.mouseCurvePoint.x / this.gw) - (this.wp / this.gw);
         var ay = (this.mouseCurvePoint.y / this.gh) - (this.wp / this.gh);
         this.addNode(ax, ay, 0.5);
         this.clickedCurve = null;
         if (this.autoOutput) { this.outputFlag = true };
-      }
     }
-  
   }
 
-  this.onDrag = function(x,y,cmd,shift) {
+  this.trackMouse = function(x, y, node, button) {
+    if (button) { 
+        max.hidecursor();
+        this.ox = this.saveMouseX;
+        this.oy = this.saveMouseY;
+    } else {
+      if (this.clickedCurve == null) {
+        var curve = this.calcPixelCoordinates(node);
+        max.pupdate(this.ox + curve.sx, this.oy + curve.sy)
+      } else {
+        var cp = this.getCurvePoint();
+        max.pupdate(this.ox + cp.x, this.oy + cp.y)
+      }
+      max.showcursor();
+      this.mouseOver(x,y);
+    }
+  }
+
+  this.onDrag = function(x,y,cmd,shift,button) {
     var DX = x - this.MX;
     var DY = this.MY - y
   
     // If user has clicked node and drags, move X/Y position of node
     if (this.clickedNode != null) {
-         this.setNodeX(this.clickedNode, DX * this.mouseDeltaResolution);
-         this.setNodeY(this.clickedNode, DY * this.mouseDeltaResolution);
+         this.setNodeX(this.clickedNode, DX * this.mouseDeltaResolutionX);
+         this.setNodeY(this.clickedNode, DY * this.mouseDeltaResolutionY);
+         this.trackMouse(x, y, this.clickedNode, button);
          if (this.autoOutput) { this.outputFlag = true };
         } else if (this.clickedCurve != null) {
       if (cmd) {
         // If CMD held, set Y position of curve segment
         if (this.clickedCurve != null) {
-          this.setCurveY(this.clickedCurve, DY * this.mouseDeltaResolution); 
+          this.setCurveY(this.clickedCurve, DY * this.mouseDeltaResolutionY); 
           if (this.autoOutput) { this.outputFlag = true };
+          if (button) {
+            max.hidecursor();
+          } else {
+            max.showcursor();
+          }
         }
       } else {
         // Otherwise change curve control point of curve
         this.setControlPoint(this.clickedCurve, 
-          (DX * this.mouseDeltaResolution * 0.75), 
-          (DY * this.mouseDeltaResolution * 0.75));
+          (DX * this.mouseDeltaResolutionX * 0.75), 
+          (DY * this.mouseDeltaResolutionY * 0.75));
+          this.trackMouse(x, y, this.clickedCurve, button);
       }
       if (this.autoOutput) { this.outputFlag = true };
 
@@ -367,6 +413,7 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   }
 
   this.mouseOut = function() {
+    this.mouseSegment = null;
     this.mouseCurve = null;
     this.mouseCurvePoint = null;
     this.mouseNode = null;
@@ -415,6 +462,11 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       this.outputFlag = false;
       return out;
     }
+  }
+
+  this.saveMouse = function(x,y) {
+    this.saveMouseX = x;
+    this.saveMouseY = y;
   }
 
   // Return instance of Mmmsegui

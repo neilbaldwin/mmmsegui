@@ -40,16 +40,76 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-21",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 745.0, 324.0, 50.0, 22.0 ],
+					"text" : "343"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 693.0, 324.0, 50.0, 22.0 ],
+					"text" : "859"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-15",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 679.0, 217.0, 29.5, 22.0 ],
+					"text" : "poll"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 5,
+					"outlettype" : [ "int", "int", "int", "int", "int" ],
+					"patching_rect" : [ 675.0, 270.0, 71.0, 22.0 ],
+					"text" : "mousestate"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 397.0, 526.0, 148.0, 22.0 ],
+					"text" : "<undefined>"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-47",
 					"linecount" : 18,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 89.0, 477.0, 150.0, 248.0 ],
+					"patching_rect" : [ 468.0, 623.0, 150.0, 248.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 6,
 					"presentation_rect" : [ 19.0, 492.0, 729.0, 87.0 ],
-					"text" : "(Note: auto-hiding of nodes is turned on by default.\n\nNodes: click and drag to set position. The first and last nodes can only be moved in the Y axis.\nCurve: click and drag to change curve control point.\nAdd Node: hold SHIFT and click on a curve segment.\nDelete Node: hold SHIFT and click on an existing node. The first and last nodes can't be deleted."
+					"text" : "(Note: auto-hiding of nodes is turned on by default)\n\nNodes: click and drag to set position. The first and last nodes can only be moved in the Y axis.\nCurve: click and drag to change curve control point.\nAdd Node: hold SHIFT and click on a curve segment.\nDelete Node: hold SHIFT and click on an existing node. The first and last nodes can't be deleted."
 				}
 
 			}
@@ -60,7 +120,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 20.0, 435.0, 159.0, 20.0 ],
+					"patching_rect" : [ 13.0, 830.0, 159.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 475.0, 91.0, 20.0 ],
 					"text" : "Customization"
@@ -74,7 +134,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 21.0, 370.0, 159.0, 20.0 ],
+					"patching_rect" : [ 14.0, 765.0, 159.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 410.0, 91.0, 20.0 ],
 					"text" : "Customization"
@@ -88,7 +148,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 139.0, 339.0, 159.0, 20.0 ],
+					"patching_rect" : [ 58.0, 722.0, 159.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 371.0, 126.0, 20.0 ],
 					"text" : "Instance Parameters"
@@ -102,7 +162,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 159.0, 358.0, 153.0, 74.0 ],
+					"patching_rect" : [ 667.0, 661.0, 154.0, 74.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 388.0, 729.0, 20.0 ],
 					"text" : "Instance Parameters: a few examples of how to define @-style parameters which affect how the graph is initially rendered."
@@ -116,7 +176,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 68.0, 338.0, 151.0, 221.0 ],
+					"patching_rect" : [ 66.0, 710.0, 151.0, 221.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 19.0, 426.0, 729.0, 47.0 ],
@@ -131,7 +191,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 592.0, 458.0, 150.0, 60.0 ],
+					"patching_rect" : [ 667.0, 822.0, 150.0, 60.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 246.0, 611.0, 445.0, 20.0 ],
 					"text" : "Code is set to auto compile but it's often temperamental. This button is your friend."
@@ -146,7 +206,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 495.0, 287.0, 138.0, 64.0 ],
+					"patching_rect" : [ 300.0, 786.0, 138.0, 64.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 486.0, 271.0, 205.0, 51.0 ],
@@ -162,7 +222,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 594.0, 145.0, 138.0, 145.0 ],
+					"patching_rect" : [ 189.0, 710.0, 138.0, 145.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 8,
 					"presentation_rect" : [ 599.0, 121.5, 155.0, 118.0 ],
@@ -178,7 +238,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 506.0, 446.0, 153.0, 78.0 ],
+					"patching_rect" : [ 671.0, 742.0, 153.0, 78.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
 					"presentation_rect" : [ 484.0, 36.5, 168.0, 64.0 ],
@@ -325,16 +385,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-2",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 82.0, 467.0, 392.0, 49.0 ],
+					"patching_rect" : [ 82.0, 467.0, 392.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 3,
-					"presentation_rect" : [ 19.0, 292.0, 463.0, 49.0 ],
-					"text" : "0 0 0 0.378774 337.316583 0.542171 0.625299 190.962054 0.689009 0.846338 162.305938 -0.412276 0.429583 73.550831 -0.384038 0.872696 100.006588 0.321914 0.875628 135.858006 0."
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 19.0, 292.0, 463.0, 35.0 ],
+					"text" : "0 0 0 0.548385 267.669461 0.552336 0.330892 377.921644 0.867024 1 354.408895 -0.498372"
 				}
 
 			}
@@ -504,7 +564,7 @@
 					"mode" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 275.0, 444.0, 128.0, 128.0 ],
+					"patching_rect" : [ 279.0, 722.0, 128.0, 128.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 0.0, -1.0, 760.0, 640.0 ],
 					"proportion" : 0.5
@@ -535,6 +595,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-6", 0 ],
 					"source" : [ "obj-16", 0 ]
 				}
@@ -551,6 +618,20 @@
 				"patchline" : 				{
 					"destination" : [ "obj-53", 1 ],
 					"source" : [ "obj-35", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 1 ],
+					"source" : [ "obj-4", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-21", 1 ],
+					"source" : [ "obj-4", 2 ]
 				}
 
 			}
@@ -625,6 +706,13 @@
 					"destination" : [ "obj-2", 1 ],
 					"order" : 1,
 					"source" : [ "obj-8", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 1 ],
+					"source" : [ "obj-8", 1 ]
 				}
 
 			}

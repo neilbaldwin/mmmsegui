@@ -26,7 +26,7 @@ You just need the two main files in your project/Max path:
 
 * `mmmsegui.maxpat` is the demo patcher to demonstrate MMMSEGUI.
 
-* `mmmsegui_readme.md` this file.
+* `readme.md` this file.
 
 #### Setup and Customization
 
@@ -152,4 +152,3 @@ Feel free to use and modify as you like. No warranty implied whatsoever.
 info@marmotaudio.co.uk or find me on the Max Discord channel.
 
 Neil
-
