@@ -143,10 +143,6 @@ The main one is I haven't included any sort of mouse pointer hiding. I'll likely
 
 The other *omission* is that the output is only formatted for one particular use. If you go into the `mmmsegui_class.js` file and find the `this.outputList` function you'll see how this output is constructed. It's up to you to create your own output formats. I'd be especially keen if someone could figure out how to format the output to use in a multi-pole filter for example.
 
-#### Licence, Warranty etc.
-
-Feel free to use and modify as you like. No warranty implied whatsoever.
-
 #### Issues, ideas?
 
 info@marmotaudio.co.uk or find me on the Max Discord channel.
