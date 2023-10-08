@@ -113,6 +113,11 @@ function setTimeScale (t) {
 }
 
 function bang() {
-  var out = mmmsegui.outputList();
-  outlet(0, out)
+  // var out = mmmsegui.outputList();
+  // outlet(0, out)
+  outlet(0, mmmsegui.testList);
+}
+
+
+function save() {
 }

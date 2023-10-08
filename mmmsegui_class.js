@@ -34,8 +34,6 @@ function Mmmsegui (jx, jy, jwidth, jheight, wp, ns, ts, autoout) {
   this.DY = 0;
   this.saveMouseX = 0;
   this.saveMouseY = 0;
-  this.ox = 0;
-  this.oy = 0;
   this.outputFlag = false;
 
   // Init curve line and node handle variables
@@ -47,6 +45,9 @@ function Mmmsegui (jx, jy, jwidth, jheight, wp, ns, ts, autoout) {
 
   // Init output timescale to 250ms
   this.timeScale = ts;
+
+  // Empty node list
+  this.nodeList = [];
 
   this.setupWindow = function() {
     this.gw = jwidth - (wp * 2);
@@ -68,7 +69,7 @@ function Mmmsegui (jx, jy, jwidth, jheight, wp, ns, ts, autoout) {
     new Node(0.0, 1.0, 0.5),
     new Node(1.0, 0.0, 0.5)
   ];
-  this.nodeCount = 2;  
+  this.nodeCount = this.nodeList.length;
 
   //----------------------------------------------------------------------------
   // Object methods
@@ -359,19 +360,21 @@ function Mmmsegui (jx, jy, jwidth, jheight, wp, ns, ts, autoout) {
   this.trackMouse = function(x, y, node, button) {
     if (button) { 
         max.hidecursor();
-        this.ox = this.saveMouseX;
-        this.oy = this.saveMouseY;
-    } else {
-      if (this.clickedCurve == null) {
-        var curve = this.calcPixelCoordinates(node);
-        max.pupdate(this.ox + curve.sx, this.oy + curve.sy)
-      } else {
-        var cp = this.getCurvePoint();
-        max.pupdate(this.ox + cp.x, this.oy + cp.y)
-      }
-      max.showcursor();
-      this.mouseOver(x,y);
+        return
     }
+      if (this.saveMouseX != null) {
+        if ((this.clickedCurve == null) && (node != null)) {
+          var curve = this.calcPixelCoordinates(node);
+          max.pupdate(this.saveMouseX + curve.sx, this.saveMouseY + curve.sy)
+        } else {
+          var cp = this.getCurvePoint();
+          max.pupdate(this.saveMouseX + cp.x, this.saveMouseY + cp.y)
+        }
+        max.showcursor();
+        this.mouseOver(x,y);
+        this.saveMouseX = null;
+        this.saveMouseY = null;  
+      }
   }
 
   this.onDrag = function(x,y,cmd,shift,button) {
