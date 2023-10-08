@@ -4,6 +4,14 @@ A multi-segment graph editor written in JS/JSUI for Maxmsp written by Neil Baldw
 
 info@marmotaudio.co.uk
 
+#### Updates:
+
+8th October 2023:
+
+* Consolidated the main JS file and the _class.js file into one file. It's easier for me to work on.
+* Implemented mouse pointer hiding when moving nodes etc.
+* Implemented state restoring - your MMMSEGUI objects should retain their state now when you save your patcher file
+
 ### Rationale
 
 As part of my ongoing JSUI journey I wanted to tackle a decent multi-segment editor. I've dabbled with a few before and this is an amalgamation of what I learned from previous efforts.
@@ -22,11 +30,11 @@ You just need the two main files in your project/Max path:
 
 * `mmmsegui.js` is the main JSUI file. Add this to your project by creating a `JSUI` object with `@filename` parameter i.e. `jsui @filename mmmsegui.js`. This file is primarly concerned with setting up a JSUI object for use with MMMSEGUI.
 
-* `mmsegui_class.js` this is the _class_ definition file for the JSUI object and contains all the instancing, setup and customization for MMMSEGUI. This is automatically loaded by `mmmsegui.js` (as long as it's located in an accessible location!)
-
 * `mmmsegui.maxpat` is the demo patcher to demonstrate MMMSEGUI.
 
 * `readme.md` this file.
+
+**Note for users of earlier versions: the file `mmmsegui_class.js` has been removed in favour of a single file schema. It's easier for me to work on and was partly necessary when I implemented the state saving functionality.
 
 #### Setup and Customization
 
@@ -65,7 +73,7 @@ The default MMSEGUI only contains two nodes, the end and start nodes. These cann
 
 #### Customization
 
-There is a HUGE amount of stuff that you can customize, most of it is located in the upper part of the `mmmsegui_class.js` file. I've tried to create variables with usefully explicit names.
+There is a HUGE amount of stuff that you can customize, most of it is located in the upper part of the `mmmsegui.js` file. I've tried to create variables with usefully explicit names.
 
 I've deliberately only created a few message functions (see bottom of `mmmsegui.js` file) so that you can create your parameter messages (see the method for setting the graph/bg colors in the demo Maxpat file).
 
@@ -73,11 +81,11 @@ I also created the basis of an @-style parameter system for creating instance va
 
 ##### Customization Fundamentals
 
-Here are a few variables you'll find at the top of the `mmmsegui_class.js` file that you can play around with. You'll see the function call to instansiate the object at near the top:
+Here are a few variables you'll find at the top of the `mmmsegui.js` file that you can play around with. You'll see the function call to instansiate the object at near the top:
 
 `function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout)`
 
-These are the parameters as they are initialised by default. You can of course change these in the `_class.js` file if you'd prefer different defaults or add message methods etc. to enable you to set them externally:
+These are the parameters as they are initialised by default. You can of course change these in the source file if you'd prefer different defaults or add message methods etc. to enable you to set them externally:
 
 `this.nodeHighlighting = true;`
 As you move your mouse pointer over nodes they are highlighted by enlarging and filling them.
@@ -141,7 +149,7 @@ So then the output from the `curve~` object will be a float value in the range 0
 
 The main one is I haven't included any sort of mouse pointer hiding. I'll likely work on that after the initial release but at first release it's deliberately not included.
 
-The other *omission* is that the output is only formatted for one particular use. If you go into the `mmmsegui_class.js` file and find the `this.outputList` function you'll see how this output is constructed. It's up to you to create your own output formats. I'd be especially keen if someone could figure out how to format the output to use in a multi-pole filter for example.
+The other *omission* is that the output is only formatted for one particular use. If you go into the `mmmsegui.js` file and find the `this.outputList` function you'll see how this output is constructed. It's up to you to create your own output formats. I'd be especially keen if someone could figure out how to format the output to use in a multi-pole filter for example.
 
 #### Issues, ideas?
 
