@@ -17,7 +17,7 @@ this.savey = 0;
 var padding = 8;
 var nodesize = 6
 var timescale = 250;
-var autooutput = true;
+var autooutput = false;
 
 jsarguments.filter(function(arg) {
   if (arg[0] == "@") {

@@ -34,6 +34,11 @@ You just need the two main files in your project/Max path:
 
 * `readme.md` this file.
 
+* `mmmseg_audio_demo_1.maxpat` demo of MMMSEGUI using a very basic step sequencer that drive a monophonic synth voice. Two step sequencers control pitch and LPF cutoff. Three MMMSEGUIs control pitch, lpf and overdruve.
+
+* `mmmseg_audio_demo_2.maxpat` a simple 4-step sequencer plays through 4 MMSEGUIs, each of which modulate the pitch of a rect~ oscillator. You can change the metro tempo and also whether the MMSEGUIs loop or are one-shot.
+
+
 **Note for users of earlier versions: the file `mmmsegui_class.js` has been removed in favour of a single file schema. It's easier for me to work on and was partly necessary when I implemented the state saving functionality.
 
 #### Setup and Customization
