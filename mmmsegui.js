@@ -4,100 +4,19 @@ mgraphics.init();
 mgraphics.relative_coords = 0;
 mgraphics.autofill = 0;
 
-// Calculate JSUI window width and height
-var jwidth = this.box.rect[2] - this.box.rect[0];
-var jheight = this.box.rect[3] - this.box.rect[1];
-// Temporary mouse position when hiding pointer
-this.savex = 0;
-this.savey = 0;
-
-// Instance variable defaults
-// use "@variablename" to set defaults in the 'jsarguments' section in the
-// inspector window for your JSUI object.
-var padding = 8;
-var nodesize = 6
-var timescale = 250;
-var autooutput = false;
-
-jsarguments.filter(function(arg) {
-  if (arg[0] == "@") {
-
-    var val = jsarguments[jsarguments.indexOf(arg)+1]
-
-    switch (arg) {
-      case "@padding":
-        padding = val;
-        break;
-
-      case "@nodesize":
-        nodesize = val;
-        break;
-
-      case "@timescale":
-        timescale = val;
-        break;
-
-      case "@autooutput":
-        autooutput = (val == "true") ? true : false;
-        break;
-
-      default:
-        break;
-    }
-  }
-});
-
-// Instansiate a new graph passing in the JSUI window dimensions and padding in pixels
+// Instansiate a new graph passing in the parent window as 'this'
 // The variable name 'mmmsegui' is referred to in JSUI functions so keep it the same
 // or replace to suit your needs
-var mmmsegui = new Mmmsegui (jwidth, jheight, this.padding, this.nodesize, this.timescale, autooutput);
+var mmmsegui = new Mmmsegui (this)
 
 //----------------------------------------------------------------------------
 // Mmmsegui Object Definition
 //----------------------------------------------------------------------------
-function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
-
-  // Mouse-over highlighting : *slightly* faster if turned off!
-  this.nodeHighlighting = true;
-  this.curveHighlighting = true;
-  this.autoHideHandles = true;
-  this.autoOutput = autoout;
-
-  // Scaled mouse delta values for updating node position etc.
-  this.mouseSpeed = 1.0
-
-  // Init window variables
-  this.wp = wp;
-  this.bgColor = [0.2, 0.2, 0.2, 1.0];
-  this.handlesVisible = false;
-
-  // Init mouse iterraction variables
-  this.mouseSegment = null;
-  this.mouseCurve = null;
-  this.mouseCurvePoint = null;
-  this.mouseNode = null;
-  this.clickedNode = null;
-  this.clickedCurve = null;
-  this.curveClickTolerance = 8;
-  this.MX = 0;
-  this.MY = 0;
-  this.DX = 0;
-  this.DY = 0;
-  this.saveMouseX = 0;
-  this.saveMouseY = 0;
-  this.outputFlag = false;
-
-  // Init curve line and node handle variables
-  this.nodeSize = ns;
-  this.lineWidth = 1;
-  this.curveFillColor = [0.1875, 1., 0.923828];
-  this.curveFillAlpha = 0.3;
-  this.curveStrokeAlpha = 0.6;
-
-  // Init output timescale to 250ms
-  this.timeScale = ts;
+function Mmmsegui (parent) {
 
   // Create empty node object
+  // x, y: normalised coordinates
+  // cp: curve control point 0.0 to 1.0
   function Node (x, y, cp) {
     this.x = x;
     this.y = y;
@@ -106,8 +25,10 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   
   // Calculate graph window based on JSUI window size and padding
   this.setupWindow = function() {
-    this.gw = jwidth - (wp * 2);
-    this.gh = jheight - (wp * 2);  
+    this.jwidth = this.parent.box.rect[2] - this.parent.box.rect[0];
+    this.jheight = this.parent.box.rect[3] - this.parent.box.rect[1];
+    this.gw = this.jwidth - (this.padding * 2);
+    this.gh = this.jheight - (this.padding * 2);
   }
 
   // Function to restore node list on loading
@@ -119,17 +40,19 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   // Function to save graph parameters for save() function
   this.saveParameters = function() {
     var sp = {
-      "nodeHighlighting": this.nodeHighlighting,
-      "curveHighlighting": this.curveHighlighting,
-      "autoHideHandles": this.autoHideHandles,
-      "autoOutput": this.autoOutput,
-      "mouseSpeed": this.mouseSpeed,
+      "fillColor": this.fillColor,
+      "strokeColor" : this.strokeColor,
+      "bgColor" : this.bgColor,
       "nodeSize": this.nodeSize,
       "lineWidth": this.lineWidth,
-      "curveFillColor": this.curveFillColor,
-      "curveFillAlpha": this.curveFillAlpha,
-      "curveStrokeAlpha": this.curveStrokeAlpha,
+      "padding" : this.padding,
       "timeScale": this.timeScale,
+      "autoOutput": this.autoOutput,
+      "nodeHighlighting": this.nodeHighlighting,
+      "curveHighlighting": this.curveHighlighting,
+      "autoHideNodes": this.autoHideNodes,
+      "nodesVisible" : this.nodesVisible,
+      "mouseSpeed": this.mouseSpeed,
       "curveClickTolerance": this.curveClickTolerance
     }
     return sp
@@ -138,32 +61,39 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
   // Function called on load to restore graph parameters
   this.loadParameters = function(p) {
     var lp = JSON.parse(p)
-    this.nodeHighlighting = lp.nodeHighlighting;
-    this.curveHighlighting = lp.curveHighlighting;
-    this.autoHideHandles = lp.autoHideHandles;
-    this.autoOutput = lp.autoOutput;
-    this.moueSpeed = lp.mouseSpeed;
+    this.fillColor = lp.fillColor;
+    this.strokeColor = lp.strokeColor;
+    this.bgColor = lp.bgColor;
     this.nodeSize = lp.nodeSize;
     this.lineWidth = lp.lineWidth;
-    this.curveFillColor = lp.curveFillColor;
-    this.curveFillAlpha = lp.curveFillAlpha;
-    this.curveStrokeAlpha = lp.curveStrokeAlpha;
+    this.padding = lp.padding;
     this.timeScale = lp.timeScale;
+    this.autoOutput = lp.autoOutput;
+    this.nodeHighlighting = lp.nodeHighlighting;
+    this.curveHighlighting = lp.curveHighlighting;
+    this.autoHideNodes = lp.autoHideNodes;
+    this.nodesVisible = lp.nodesVisible;
+    this.mouseSpeed = lp.mouseSpeed;
     this.curveClickTolerance = lp.curveClickTolerance;
   }
 
-  // Whole graph and nodes use normalised coordinates.
-  // This calcs start, control point(s) and end screen pixel position
-  // curve between node and next node for drawing and click detection.
+  // Nodes and curves use normalised coordinates
+  // This function calculates the corresponding pixel coordinates
+  // In: node number
+  // Out: {sx, sy, cx, cy, ex ,ey}
+  // SX/SY : coordinates of start node
+  // CX/CY : coordinates of curve control point
+  // EX/EY : coordinates of end node
   this.calcPixelCoordinates = function(n) {
     // Get start point node from node list
     var node = this.nodeList[n];
+
     // Get next node from list
     var nx = this.nodeList[n+1];
 
     // Calculate screen start position in pixels
-    var sx = this.gw * node.x + this.wp;
-    var sy = this.gh * node.y + this.wp;
+    var sx = this.gw * node.x + this.padding;
+    var sy = this.gh * node.y + this.padding;
     // If next node undefined this is end of curve so set arbitrary
     // control and end coordinates to avoid error.
     if (typeof nx == "undefined") {
@@ -173,13 +103,13 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       var cy = 0;  
     } else {
       // Otherwise calculate curve control point position and end position in pixels
-      var ex = this.gw * nx.x + this.wp;
-      var ey = this.gh * nx.y + this.wp;
+      var ex = this.gw * nx.x + this.padding;
+      var ey = this.gh * nx.y + this.padding;
       var cp = node.cp;
       var cpx = node.x + ((nx.x-node.x) * cp);
       var cpy = nx.y - ((nx.y-node.y) * cp);
-      var cx = this.gw * cpx + this.wp;
-      var cy = this.gh * cpy + this.wp;
+      var cx = this.gw * cpx + this.padding;
+      var cy = this.gh * cpy + this.padding;
     }
     // Return object containing pixel positions
     return { sx:sx, sy:sy, cx:cx, cy:cy, ex:ex, ey:ey }
@@ -187,9 +117,10 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
 
   // Draw background fill
   this.drawBg = function() {
+    // Get background color
     mgraphics.set_source_rgba(this.bgColor);
     // Fill entire JSUI window
-    mgraphics.rectangle(0, 0, jwidth, jheight);    
+    mgraphics.rectangle(0, 0, this.jwidth, this.jheight);    
     mgraphics.fill();
   }
 
@@ -208,21 +139,22 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     }
 
     // Fix for filled curve as start and end Y positions can be different
-    mgraphics.line_to(this.gw + this.wp, this.gh + this.wp);
-    mgraphics.line_to(this.wp, this.gh + this.wp);    
+    mgraphics.line_to(this.gw + this.padding, this.gh + this.padding);
+    mgraphics.line_to(this.padding, this.gh + this.padding);    
     mgraphics.close_path();
-    mgraphics.set_source_rgba(this.curveFillColor, this.curveFillAlpha);    
+    mgraphics.set_source_rgba(this.fillColor);    
     mgraphics.fill_preserve();
-    mgraphics.set_source_rgba(this.curveFillColor, this.curveStrokeAlpha);
+    mgraphics.set_source_rgba(this.strokeColor);
     mgraphics.set_line_width(this.lineWidth);
     mgraphics.stroke();
 
     // Highlights curve when curve detected under mouse pointer
+    var strokeMagnify = 1.5
     if (this.curveHighlighting) {
       if ((this.mouseCurvePoint != null) && (this.mouseNode == null)) {
         var curve = this.calcPixelCoordinates(this.mouseCurve)
-        mgraphics.set_source_rgba(this.curveFillColor, this.curveStrokeAlpha*2);
-        mgraphics.set_line_width(this.lineWidth*2);
+        mgraphics.set_source_rgba(this.bright(this.strokeColor, 2.0));
+        mgraphics.set_line_width(this.lineWidth * strokeMagnify + 0.5);
         mgraphics.move_to(curve.sx, curve.sy);
         mgraphics.curve_to(curve.cx, curve.cy, curve.cx, curve.cy, curve.ex, curve.ey);
         mgraphics.stroke();
@@ -230,41 +162,62 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     }
   }
 
-  // Draw node handles for dragging
-  this.drawNodes = function() {
-    if (!this.handlesVisible) { return };
+  // Function to "brighten" RGBA color - used for hover highlighting
+  // In: RGBA color object, amp (multiplication factor)
+  // Out: adjusted RGBA object
+  this.bright = function(color, amp) {
+    var b = []
+    b[0] = clamp(color[0] * amp, 0.0, 2.0)
+    b[1] = clamp(color[1] * amp, 0.0, 2.0)
+    b[2] = clamp(color[2] * amp, 0.0, 2.0)
+    b[3] = clamp(color[3] * amp, 0.0, 2.0)
+    return b
+  }
 
-    mgraphics.set_line_width(2);
+  // Draw node handles
+  this.drawNodes = function() {
+
+    if (!this.nodesVisible) { return };
+
+    // Draw square node at start of graph
+    mgraphics.set_line_width(this.lineWidth);
     var curve = this.calcPixelCoordinates(0)
     mgraphics.rectangle(curve.sx-(this.nodeSize/2), 
       curve.sy-(this.nodeSize/2), this.nodeSize, this.nodeSize);
 
+    // Draw all 'normal' elipse nodes
     for (n = 1; n < this.nodeCount-1; n++) {
       var curve = this.calcPixelCoordinates(n);
       mgraphics.ellipse(curve.sx-(this.nodeSize/2), 
         curve.sy-(this.nodeSize/2), this.nodeSize, this.nodeSize);
     }
     
+    // Draw square node at end of graph
     var curve = this.calcPixelCoordinates(this.nodeCount-1);
     mgraphics.rectangle(curve.sx-(this.nodeSize/2), 
       curve.sy-(this.nodeSize/2), this.nodeSize, this.nodeSize);
+
+    // Fill and stroke all nodes
     mgraphics.set_source_rgba(this.bgColor);
     mgraphics.fill_preserve();
-    mgraphics.set_source_rgba(this.curveFillColor,this.curveStrokeAlpha);
+    mgraphics.set_source_rgba(this.strokeColor);
     mgraphics.stroke();
 
     // Highlights node if node detected under mouse pointer
+    var nodeMagnify = 1.2;
     if (this.nodeHighlighting) {
       if (this.mouseNode != null) {
         var curve = this.calcPixelCoordinates(this.mouseNode)
-        var ns = this.nodeSize * 1.8;
+        var ns = this.nodeSize * nodeMagnify;
+        mgraphics.set_line_width(this.lineWidth * nodeMagnify + 1.0);
+        
         if ((this.mouseNode == 0) || (this.mouseNode == this.nodeCount-1)) {
           mgraphics.rectangle(curve.sx-(ns/2), curve.sy-(ns/2), ns, ns);
         } else {
           mgraphics.ellipse(curve.sx-(ns/2), curve.sy-(ns/2), ns, ns);
         }
-        mgraphics.set_source_rgba(this.curveFillColor,this.curveStrokeAlpha*2);        
-        mgraphics.fill();
+        mgraphics.set_source_rgba(this.bright(this.strokeColor, 2.0));        
+        mgraphics.stroke();
       }  
     }
   }
@@ -301,12 +254,25 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     this.nodeList[n].y = clamp(this.nodeList[n].y - f, 0.0, 1.0);
   }
 
+  // Adjust Y posiiton of curve control point
   this.setCurveY = function(n, f) {
     var c1 = this.nodeList[n].y - f;
     var c2 = this.nodeList[n+1].y - f;
     if ((c1 < 0.0) || (c1 > 1.0) || (c2 < 0.0) || (c2 > 1.0)) { return };
     this.nodeList[n].y = c1;
     this.nodeList[n+1].y = c2;
+  }
+
+  // Adjust X position of curve control point
+  this.setCurveX = function(n, f) {
+    if ((n == 0) || (n+1 == this.nodeList.length-1)) { return }
+    var c1 = this.nodeList[n].x + f;
+    var c2 = this.nodeList[n+1].x + f;
+    var c3 = (n > 0) ? this.nodeList[n-1].x : 0.0
+    var c4 = ((n+1) < this.nodeList.length-1) ? this.nodeList[n+2].x : 1.0
+    if ((c1 < c3) || (c2 > c4) ) { return };
+    this.nodeList[n].x = c1;
+    this.nodeList[n+1].x = c2;
   }
 
   // Set curve control point
@@ -321,20 +287,27 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     }
   }
 
+  // Handle mouse over nodes and curve segments
   this.mouseOver = function(x,y) {
-    if (this.autoHideHandles) { this.handlesVisible = true };
+    if (this.autoHideNodes) { this.nodesVisible = true };
     this.mouseNode = null;
     this.mouseSegment = null;
     this.mouseCurvePoint = null;
+    var ns = this.nodeSize * 2.0
+
+    // Detect which node mouse point is over
     for (n = 0; n <= this.nodeCount-1; n++) {
       var curve = this.calcPixelCoordinates(n)
-      if (( x > curve.sx-this.nodeSize) && (x < curve.sx+this.nodeSize)
-        && (y > curve.sy-this.nodeSize) && (y < curve.sy+this.nodeSize)) {
+      if (( x > curve.sx-ns) && (x < curve.sx+ns)
+        && (y > curve.sy-ns) && (y < curve.sy+ns)) {
+          // this.mouseNode now contains node number that mouse is over
           this.mouseNode = n
+          n = this.nodeCount-1;
       }
     }
 
-    if ((x < this.wp ) || (x > this.gw + this.wp) || (y < this.wp) || (y > this.gh + this.wp)) { 
+    // If mouse pointer outside of graph don't process further
+    if ((x < this.padding ) || (x > this.gw + this.padding) || (y < this.padding) || (y > this.gh + this.padding)) { 
       return
     };
 
@@ -343,16 +316,25 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       if ((x / this.gw) > this.nodeList[n].x) { this.mouseSegment = n };
     }
 
+    // Determine if point pointer is close to the segment curve
     if (this.mouseSegment != null) {
       this.mouseCurvePoint = this.isPointNearCurve(this.mouseSegment, x, y);
       if ((this.mouseCurvePoint != null)) {
         this.mouseCurve = this.mouseSegment;
       }
+
+      // Determine how far the mouse pointer is along current segment
+      var t = (x - this.padding) / (this.gw)
+      var tx = this.nodeList[this.mouseSegment].x
+      var nx = this.nodeList[this.mouseSegment+1].x
+      var wx = nx - tx
+      this.mouseCurveIndex = clamp((t - tx) / wx, 0.0, 1.0)
     }
 
     return
   }
 
+  // Return X/Y pixel coordinates where user clicked on a curve
   this.getCurvePoint = function() {
     if (this.clickedCurve == null) { return null }
     var curve = this.calcPixelCoordinates(this.clickedCurve);
@@ -363,7 +345,6 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
 
   // Detects if use has clicked on (near) a curve and returns the curve position if true
   this.isPointNearCurve = function(n, x, y) {
-
     // Calculate points along the curve and check proximity
     var curve = this.calcPixelCoordinates(n)
     var lastDistance = 10000;
@@ -400,24 +381,57 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       return { x:x, y:y };
   }
 
-  this.onClick = function(x,y, shift) {
-    // if ((x < this.wp ) || (x > this.gw + this.wp) || (y < this.wp) || (y > this.gh + this.wp)) { return };
+  this.onDblClick = function(x, y, shift) {
     this.MX = x;
     this.MY = y;	
     this.clickedNode = null;
     this.clickedCurve = null;
     this.mouseCurvePoint = null;
 
+    // If mouse pointer is over node then clicked node is that node
     if (this.mouseNode != null) { this.clickedNode = this.mouseNode };
+
+    // If mouse pointer not over node but IS inside graph, did user click curve?
+    if ((this.mouseNode == null) && (this.mouseSegment != null)) {
+      this.mouseCurvePoint = this.isPointNearCurve(this.mouseCurve,x,y)
+      if (this.mouseCurvePoint != null) {
+        this.clickedCurve = this.mouseCurve;
+      }
+    }
   
-    // If SHIFT and clicked node, delete that node
-    if ((shift) && (this.clickedNode != null)) {
+    // If double-clicked node, delete that node
+    if (this.clickedNode != null) {
       this.deleteNode(this.clickedNode);
       this.clickedNode = null;
       this.saveMouse();
       if (this.autoOutput) { this.outputFlag = true };
     }
 
+    // Or if user double-clicked curve with SHIFT, reset curve shape
+    if (this.clickedCurve != null) {
+      if (shift) {
+        this.nodeList[this.clickedCurve].cp = 0.5
+      } else {
+        var ax = (this.mouseCurvePoint.x / this.gw) - (this.padding / this.gw);
+        var ay = (this.mouseCurvePoint.y / this.gh) - (this.padding / this.gh);
+        this.addNode(ax, ay, 0.5);
+        this.clickedCurve = null;
+        if (this.autoOutput) { this.outputFlag = true };
+      }
+    }
+  }
+
+  this.onClick = function(x,y, shift) {
+    this.MX = x;
+    this.MY = y;	
+    this.clickedNode = null;
+    this.clickedCurve = null;
+    this.mouseCurvePoint = null;
+
+    // If mouse over node, clicked node is that node
+    if (this.mouseNode != null) { this.clickedNode = this.mouseNode };
+  
+    // Or if mouse over curve segment, did user click on curve?
     if ((this.mouseNode == null) && (this.mouseSegment != null)) {
       this.mouseCurvePoint = this.isPointNearCurve(this.mouseCurve,x,y)
       if (this.mouseCurvePoint != null) {
@@ -425,50 +439,73 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       }
     }
 
-    if ((shift) && (this.clickedCurve != null)) {
-        var ax = (this.mouseCurvePoint.x / this.gw) - (this.wp / this.gw);
-        var ay = (this.mouseCurvePoint.y / this.gh) - (this.wp / this.gh);
-        this.addNode(ax, ay, 0.5);
-        this.clickedCurve = null;
-        if (this.autoOutput) { this.outputFlag = true };
+    // If user did click curve, calculate how far along it user clicked
+    if (this.clickedCurve != null) {
+      var t = x / this.gw
+      var tx = this.nodeList[this.clickedCurve].x
+      var nx = this.nodeList[this.clickedCurve+1].x
+      var wx = nx - tx
+      var ix = (t - tx) / wx
+      this.clickedCurveIndex = ix;
     }
   }
 
+  // Track mouse movement and react to what pointer is over
   this.trackMouse = function(x, y, node, button) {
+    // If button clicked, hide mouse pointer
     if (button) { 
         max.hidecursor();
         return
     }
-      if (this.saveMouseX != null) {
-        if ((this.clickedCurve == null) && (node != null)) {
+    // Or check if mouse position saved (something was clicked)
+    if (this.saveWindowX != -1) {
+      if ((this.clickedCurve == null) && (node != null)) {
+        // Moving node
+        if ((x != this.saveMouseX) && (y != this.saveMouseY)) {
+          // Mouse button released from node move, restore pointer position
           var curve = this.calcPixelCoordinates(node);
-          max.pupdate(this.saveMouseX + curve.sx, this.saveMouseY + curve.sy)
-        } else {
-          var cp = this.getCurvePoint();
-          max.pupdate(this.saveMouseX + cp.x, this.saveMouseY + cp.y)
+          max.pupdate(this.saveWindowX + curve.sx, this.saveWindowY + curve.sy)
         }
-        max.showcursor();
-        this.mouseOver(x,y);
-        this.saveMouseX = null;
-        this.saveMouseY = null;  
+      } else {
+        // Moving curve
+        if ((x != this.saveMouseX) && (y != this.saveMouseY)) {
+          // Mouse pointer released from curve move, restore pointer position
+          var n = this.calcPixelCoordinates(node)
+          var b = this.calculateBezierPoint(n.sx, n.sy, n.cx, n.cy, n.cx, n.cy, n.ex, n.ey, this.clickedCurveIndex)
+          max.pupdate(this.saveWindowX + this.saveMouseX, this.saveWindowY + b.y)
+
+        }
       }
+
+      // Button released, show mouse pointer
+      max.showcursor();
+      // Update mouse-over variables
+      this.mouseOver(x,y);
+      // Reset mouse save variables
+      this.saveWindowX = -1;
+      this.saveWindowY = -1;  
+      this.saveMouseX = 0;
+      this.saveMouseY = 0;  
+    }
   }
 
+  // Function to handle dragging of node or curve
   this.onDrag = function(x,y,cmd,shift,button) {
     var DX = x - this.MX;
     var DY = this.MY - y
   
     // If user has clicked node and drags, move X/Y position of node
     if (this.clickedNode != null) {
-         this.setNodeX(this.clickedNode, DX * (1.0 / jwidth * this.mouseSpeed));
-         this.setNodeY(this.clickedNode, DY * (1.0 / jheight * this.mouseSpeed));
+         this.setNodeX(this.clickedNode, DX * (1.0 / this.jwidth * this.mouseSpeed));
+         this.setNodeY(this.clickedNode, DY * (1.0 / this.jheight * this.mouseSpeed));
          this.trackMouse(x, y, this.clickedNode, button);
          if (this.autoOutput) { this.outputFlag = true };
         } else if (this.clickedCurve != null) {
-      if (cmd) {
+      if (shift) {
         // If CMD held, set Y position of curve segment
         if (this.clickedCurve != null) {
-          this.setCurveY(this.clickedCurve, DY * (1.0 / jheight * this.mouseSpeed)); 
+          this.setCurveY(this.clickedCurve, DY * (1.0 / this.jheight * this.mouseSpeed)); 
+          this.setCurveX(this.clickedCurve, DX * (1.0 / this.jwidth * this.mouseSpeed)); 
           if (this.autoOutput) { this.outputFlag = true };
           if (button) {
             max.hidecursor();
@@ -479,25 +516,23 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
       } else {
         // Otherwise change curve control point of curve
         this.setControlPoint(this.clickedCurve, 
-          (DX * (1.0 / jwidth * this.mouseSpeed) * 0.75), 
-          (DY * (1.0 / jheight * this.mouseSpeed) * 0.75));
+          (DX * (1.0 / this.jwidth * this.mouseSpeed) * 0.75), 
+          (DY * (1.0 / this.jheight * this.mouseSpeed) * 0.75));
           this.trackMouse(x, y, this.clickedCurve, button);
       }
       if (this.autoOutput) { this.outputFlag = true };
-
     }
-  
     this.MX = x;
     this.MY = y;
-  
   }
 
+  // Handle mouse leaving graph area
   this.mouseOut = function() {
     this.mouseSegment = null;
     this.mouseCurve = null;
     this.mouseCurvePoint = null;
     this.mouseNode = null;
-    if (this.autoHideHandles) { this.handlesVisible = false };
+    if (this.autoHideNodes) { this.nodesVisible = false };
   }
   
   // Some data massaging to get the correct results for the Max [curve~] object
@@ -519,23 +554,7 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     return out;
   }
 
-  this.setFillColor = function(r, g, b) {
-    this.curveFillColor[0] = r;
-    this.curveFillColor[1] = g;
-    this.curveFillColor[2] = b;  
-  }
-
-  this.setBgColor = function(r, g, b, a) {
-    this.bgColor[0] = r;
-    this.bgColor[1] = g;
-    this.bgColor[2] = b;  
-    this.bgColor[3] = a;  
-  }
-
-  this.setTimeScale = function(t) {
-    this.timeScale = clamp(t, 10, 10000);
-  }
-
+  // Called to constantly output node list, if enabled
   this.outputConstantly = function() {
     if (this.autoOutput) {
       var out = (this.outputFlag) ? this.outputList() : false
@@ -544,19 +563,269 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
     }
   }
 
-  this.saveMouse = function(x,y) {
-    this.saveMouseX = x;
-    this.saveMouseY = y;
+  // Return curve segment number based on time input
+  this.whichSegment = function(t) {
+    for (var n = 0; n < this.nodeList.length - 1; n++ ) {
+      if ((t >= this.nodeList[n].x) && (t <= this.nodeList[n+1].x)) {
+        return n        
+      }
+    }
+  }
+  
+  // Return a segment and index into that segment based on time
+  this.getSegmentAndIndex = function(t) {
+    var s = this.whichSegment(t)
+    var tx = this.nodeList[s].x
+    var nx = this.nodeList[s+1].x
+    var wx = nx - tx
+    var ix = (t - tx) / wx
+    return {s:s, ix:ix}
   }
 
-  // Create initial 'empty' node list
-  this.setupWindow()
-  this.nodeList = [
-    new Node(0.0, 0.0, 0.5),
-    new Node(1.0, 1.0, 0.5)
-  ]
-  this.nodeCount = this.nodeList.length;
+  // Output Y value at time specified by input (ms)
+  this.outputValueAtTime = function(t) {
+    if ((t < 0.0) || (t > this.timeScale)) {
+      post("Error: time is outside of range of current timescale setting for graph.")
+      return;
+    }
+    this.outputValueAtPosition(t / this.timeScale)
+  }
+
+  // Output Y value at time (normalised)
+  this.outputValueAtPosition = function(t) {
+    var si = this.getSegmentAndIndex(t)
+    var n = this.calcPixelCoordinates(si.s)
+    var b = this.calculateBezierPoint(n.sx, n.sy, n.cx, n.cy, n.cx, n.cy, n.ex, n.ey, si.ix)
+    outlet(1, [ 1.0 - ((this.gh,(b.y) - this.padding) / this.gh)  ])
+    refresh();
+  }
+
+  this.setNode = function(p, x, y, c) {
+    this.setXat(p, x);
+    this.setYat(p, y);
+    this.setCat(p, c);
+  }
+
+  this.setXat = function(p, px) {
+    if ((p > 0) && (p < this.nodeCount-1)) {
+      this.nodeList[p].x = clamp(px, this.nodeList[p-1].x, this.nodeList[p+1].x);
+    }
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  this.setYat = function(p, py) {
+    if (p < this.nodeCount) {
+      this.nodeList[p].y = clamp(py, 0.0, 1.0);
+    }
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  this.setCat = function(p, c) {
+    if (p < this.nodeCount-1) {
+      this.nodeList[p].cp = clamp(c, 0.0, 1.0);
+    }
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  // Save mouse position when hiding mouse pointer
+  this.saveMouse = function(mx, my, wx, wy) {
+    this.saveMouseX = mx;
+    this.saveMouseY = my;
+    this.saveWindowX = wx;
+    this.saveWindowY = wy;
+  }
+
+  //----------------------------------------------------------------------------
+  // Parameter setting functions
+  //----------------------------------------------------------------------------
+
+  this.setTimeScale = function(t) {
+    this.timeScale = t;
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  this.setPadding = function(p) {
+    this.padding = clamp(p, 0, 128);
+  }
+
+  this.setNodeSize = function(n) {
+    this.nodeSize = clamp(n, 2.5, this.padding);
+  }
+
+  this.setLineWidth = function(l) {
+    this.lineWidth = clamp(l, 1.0, 4.0);
+  }
+
+  this.setAutoOutput = function(a) {
+    this.autoOutput = a;
+  }
+
+  this.setFillColor = function(color) {
+    this.fillColor = color;
+  }
+
+  this.setStrokeColor = function(color) {
+    this.strokeColor = color;
+  }
+
+  this.setBgColor = function(color) {
+    this.bgColor = color
+  }
+
+  this.setNodeHighlighting = function(n) {
+    this.nodeHighlighting = n;
+  }
+
+  this.setCurveHighlighting = function (c) {
+    this.curveHighlighting = c
+  }
+
+  this.setAutoHideNodes = function(a) {
+    this.autoHideNodes = a
+  }
+
+  this.setNodesVisible = function(n) {
+    this.nodesVisible = n;
+  }
+
+  // Scaled mouse delta values for updating node position etc.
+  this.setMouseSpeed = function(s) {
+    // Clamp to reasonable speed (guess)
+    this.mouseSpeed = clamp(s, 0.25, 2.0)
+  }
   
+  // Set graph from node list (MMMSEGUI format)
+  this.setGraph = function(nlist) {
+    if (nlist.length < 6) {
+      post("Error: graph command needs at least 2 nodes (x, y, c)")
+      return
+    }
+
+    this.nodeList = []
+    for (var n = 0; n < nlist.length; n+=3) {
+      var nx = nlist[n]
+      var ny = nlist[n+1]
+      var nc = nlist[n+2]
+        this.nodeList.push(new Node(nx, ny, nc))
+      }
+
+    this.nodeCount = this.nodeList.length;
+
+    // Check start and end of curve are at 0.0/1.0 and adjust if not
+    if ((this.nodeList[0].x != 0.0) || (this.nodeList[this.nodeCount-1].x != 1.0)) {
+      post("Warning: start/end of graph adjusted to 0.0/1.0")
+      this.nodeList[0].x = 0.0
+      this.nodeList[this.nodeCount-1].x = 1.0  
+    }
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  // Set graph from node list in 'curve~' object format
+  this.setGraphFromCurve = function(nlist) {
+    if (nlist.length < 6) {
+      post("Error: graph command needs at least 2 nodes (x, y, c)")
+      return
+    }
+
+    var dt = 0.0
+    var tempNodeList = []
+    this.nodeList = []
+
+    // Build temporary list first as need to calculate total curve time in MS
+    for (var n = 0; n < nlist.length; n+=3) {
+      var y = nlist[n]
+      var x = dt += nlist[n+1]
+      var c = nlist[n+2] / 1.998 + 0.5;
+      // post(list[n+2],c)
+      tempNodeList.push([y, x, c])
+    }
+
+    // Set timescale for new curve
+    this.timeScale = dt
+
+    // Process list and replace absolute X time with normalised value
+    for (n = 0; n < tempNodeList.length; n++) {
+      var y = 1.0 - tempNodeList[n][0]
+      var x = tempNodeList[n][1] / this.timeScale
+      // Curve point is always related to next node
+      var c = (n == tempNodeList.length -1) ? 0.5 : 1.0 * [tempNodeList[n+1][2]]
+      // Have to "cast" parameter to floats for some reason
+      this.nodeList.push(new Node(1.0 * x, 1.0 * y, 1.0 * c))
+    }
+
+    this.nodeCount = this.nodeList.length
+
+    // Check start and end of curve are at 0.0/1.0 and adjust if not
+    if ((this.nodeList[0].x != 0.0) || (this.nodeList[this.nodeCount-1].x != 1.0)) {
+      post("Warning: start/end of graph adjusted to 0.0/1.0")
+      this.nodeList[0].x = 0.0
+      this.nodeList[this.nodeCount-1].x = 1.0  
+    }
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  // Clear graph
+  this.initNodeList = function() {
+    // Create initial 'empty' node list
+    this.nodeList = [
+      new Node(0.0, 0.0, 0.5),
+      new Node(1.0, 1.0, 0.5)
+    ]
+    this.nodeCount = this.nodeList.length;
+    if (this.autoOutput) { this.outputFlag = true };
+  }
+
+  //----------------------------------------------------------------------------
+  // Init
+  //----------------------------------------------------------------------------
+
+  this.parent = parent;
+
+  this.setupWindow()
+
+  this.curveFillColor = [0,0,0,0]
+  this.curveStrokeColor = [0,0,0,0]
+  this.bgColor = [0,0,0,0]
+
+  // Set default values
+  this.setNodeHighlighting(true);
+  this.setCurveHighlighting(true);
+  this.setAutoHideNodes(true);
+  this.setAutoOutput(true);
+  this.setPadding(8)
+  this.setBgColor([0.1, 0.1, 0.1, 1.0]);
+  this.setFillColor([0.7, 0.7, 0.7, 0.7]);
+  this.setStrokeColor([0.8, 0.8, 0.8, 0.6])
+  this.setTimeScale(1000)
+  this.setMouseSpeed(1.0)
+
+  // Calculate defauly Node Size and Line Width based on window size
+  var v1 = (this.jwidth + this.jheight) / 750
+  var v2 = Math.max(1, v1)
+  this.setNodeSize(Math.max(4, v2))
+  this.setLineWidth(v2)
+  
+  // Init mouse iterraction variables
+  this.mouseSegment = null;
+  this.mouseCurve = null;
+  this.mouseCurveIndex = 0.0
+  this.mouseCurvePoint = null;
+  this.mouseNode = null;
+  this.clickedNode = null;
+  this.clickedCurve = null;
+  this.clickedCurveIndex = 0.0;
+  this.curveClickTolerance = 8;
+  this.outputFlag = false;
+  this.MX = 0;
+  this.MY = 0;
+  this.DX = 0;
+  this.DY = 0;
+  this.saveWindowX = -1;
+  this.saveWindowY = -1;
+  this.saveMouseX = 0;
+  this.saveMouseY = 0;
+  this.initNodeList();
+
   return this
 }
 
@@ -565,6 +834,9 @@ function Mmmsegui (jwidth, jheight, wp, ns, ts, autoout) {
 //----------------------------------------------------------------------------
 
 function paint() {
+  // Always calculate window settings in case it has been resized
+  mmmsegui.setupWindow()
+
   // Draw background fill
   mmmsegui.drawBg();
   // Draw curve
@@ -583,13 +855,20 @@ function clamp(val, min, max) {
 }
 
 function onclick(x, y, button, cmd, shift, capslock, option, ctrl) {
-  // Init mouse click variables
   mmmsegui.onClick(x,y,shift);
-  mmmsegui.saveMouse(
-    this.savex = this.patcher.getattr('rect')[0] + this.box.rect[0],
-    this.savey = this.patcher.getattr('rect')[1] + this.box.rect[1]
+  mmmsegui.saveMouse(x, y, 
+    this.patcher.getattr('rect')[0] + this.box.rect[0],
+    this.patcher.getattr('rect')[1] + this.box.rect[1]
   )
-  }
+}
+
+function ondblclick(x, y, button, cmd, shift, capslock, option, ctrl) {
+  mmmsegui.onDblClick(x,y,shift);
+  mmmsegui.saveMouse(x, y,
+  this.patcher.getattr('rect')[0] + this.box.rect[0],
+  this.patcher.getattr('rect')[1] + this.box.rect[1]
+  )
+}
 
 function ondrag(x, y, button, cmd, shift, capslock, option, ctrl) {
   mmmsegui.onDrag(x,y,cmd,shift,button);
@@ -606,25 +885,135 @@ function onidleout(x, y, button, cmd, shift, capslock, option, ctrl) {
   mmmsegui.mouseOut();
 }
 
-function setFillColor (r, g, b) {
-  mmmsegui.setFillColor(r, g, b);
+function onresize(w, h) {
+	this.box.size(w, h);
+  mmmsegui.setupWindow();
   refresh();
-}
-
-function setBgColor (r, g, b, a) {
-  mmmsegui.setBgColor(r, g, b, a);
-  refresh();
-}
-
-// Set timescale of curve for output
-// Normalised delta times between nodes are multiplied by this value
-function setTimeScale (t) {
-  mmmsegui.setTimeScale(t);
 }
 
 function bang() {
   var out = mmmsegui.outputList();
   outlet(0, out)
+}
+
+//----------------------------------------------------------------------------
+// Parameter message functions
+//----------------------------------------------------------------------------
+
+function fillcolor (r, g, b, a) {
+  mmmsegui.setFillColor([r, g, b, a]);
+  refresh();
+}
+
+function strokecolor (r, g, b, a) {
+  mmmsegui.setStrokeColor([r, g, b, a])
+  refresh();
+}
+
+function bgcolor (r, g, b, a) {
+  mmmsegui.setBgColor([r, g, b, a]);
+  refresh();
+}
+
+function timescale (t) {
+  mmmsegui.setTimeScale(t)
+  refresh();
+}
+
+function nodesize(n) {
+  mmmsegui.setNodeSize(n)
+  refresh();
+}
+
+function linewidth(l) {
+  mmmsegui.setLineWidth(l)
+  refresh()
+}
+
+function padding (p) {
+  mmmsegui.setPadding(p)
+  refresh()
+}
+
+function autooutput(a) {
+  mmmsegui.setAutoOutput(a);
+  refresh()
+}
+
+function nodehighlighting(n) {
+  mmmsegui.setNodeHighlighting(n)
+  refresh()
+}
+
+function curvehighlighting(c) {
+  mmmsegui.setCurveHighlighting(c)
+  refresh()
+}
+
+function autohidenodes(a) {
+  mmmsegui.setAutoHideNodes(a)
+  refresh()
+}
+
+function nodesvisible(n) {
+  mmmsegui.setNodesVisible(n)
+  refresh()
+}
+
+function clear() {
+  mmmsegui.initNodeList()
+  refresh();
+}
+
+function graph() {
+  mmmsegui.setGraph(arguments);
+  refresh();  
+}
+
+function graphfromcurve() {
+  mmmsegui.setGraphFromCurve(arguments);
+  refresh();  
+}
+
+function mousespeed(s) {
+  mmmsegui.setMouseSpeed(s);
+}
+
+function nodelist() {
+  for (n = 0; n < mmmsegui.nodeCount; n++) {
+    post(mmmsegui.nodeList[n].x, mmmsegui.nodeList[n].y, mmmsegui.nodeList[n].cp)
+  }
+}
+
+function getvalue(p) {
+  mmmsegui.outputValueAtPosition(clamp(p, 0.0, 1.0))
+}
+
+function setnode(p, x, y, c) {
+  mmmsegui.setNode(p, x, y, c);
+  refresh();
+}
+function setxat(p, x) {
+  mmmsegui.setXat(p, x);
+  refresh();
+}
+
+function setyat(p, y) {
+  mmmsegui.setYat(p, y);
+  refresh();
+}
+
+function setcat(p, c) {
+  mmmsegui.setCat(p, c);
+  refresh();
+}
+
+function getvalueattime(t) {
+  mmmsegui.outputValueAtTime(t);
+}
+
+function msg_float(t) {
+  mmmsegui.outputValueAtPosition(t);
 }
 
 //----------------------------------------------------------------------------

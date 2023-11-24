@@ -56,10 +56,11 @@ The entire documentation has been updated but here are the highlights:
 ## Content and Installation
 
 * `mmmsegui.js` is the main JSUI file you need to use MMMSEGUI.
-* `mmmsegui.maxpat` is the demo patcher to demonstrate MMMSEGUI features
+* `mmmsegui.maxpat` is the demo patcher to demonstrate all MMMSEGUI's features - play around with stuff
 * `readme.md` this file.
 * `mmmseg_audio_demo_1.maxpat` demo of MMMSEGUI using a very basic step sequencer that drive a monophonic synth voice. Two step sequencers control pitch and LPF cutoff. Three MMMSEGUI envelopes control pitch, low-pass filter and overdrive modulation.
 * `mmmseg_audio_demo_2.maxpat` a simple 4-step sequencer steps through four MMSEGUIs, each of which modulate the pitch of a `[rect~]` oscillator. You can change the metro tempo and also whether the MMSEGUIs loop (the `curve~` objects are re-triggered when they reach their end point).
+
 ## Adding MMMSEGUI To Your Patcher
 
 Put the `mmmsegui.js` file in your Max search path(s) then add a JSUI object to your patcher specifying the MMMSEGUI filename:

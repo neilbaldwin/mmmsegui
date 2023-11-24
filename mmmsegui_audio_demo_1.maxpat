@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 59.0, 104.0, 402.0, 576.0 ],
+		"rect" : [ 56.0, 79.0, 371.0, 542.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,71 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"format" : 6,
+					"id" : "obj-47",
+					"maxclass" : "flonum",
+					"maximum" : 500.0,
+					"minimum" : 5.0,
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 545.0, 279.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 272.0, 65.0, 50.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-16",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 511.0, 317.0, 76.0, 22.0 ],
+					"text" : "timescale $1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-23",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 96.0, 672.0, 134.0, 22.0 ],
+					"text" : "strokecolor $1 $2 $3 $4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 107.0, 605.0, 115.0, 22.0 ],
+					"text" : "bgcolor $1 $2 $3 $4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-13",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 307.0, 672.0, 75.0, 22.0 ],
+					"text" : "autooutput 0"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bgmode" : 0,
 					"border" : 0,
@@ -132,7 +197,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"activebgoncolor" : [ 1.0, 0.709803921568627, 0.196078431372549, 1.0 ],
 					"bgcolor" : [ 0.0, 0.0, 0.0, 1.0 ],
 					"id" : "obj-59",
 					"maxclass" : "live.tab",
@@ -189,7 +253,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 357.0, 536.5, 150.0, 20.0 ],
+					"patching_rect" : [ 1106.0, 304.5, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 176.5, 355.0, 63.0, 20.0 ],
 					"text" : "Delay Vol.",
@@ -203,7 +267,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 336.5, 543.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1085.5, 311.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 39.5, 355.0, 47.0, 20.0 ],
 					"text" : "Dry Vol",
@@ -217,7 +281,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 371.0, 485.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1120.0, 253.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 42.0, 65.0, 39.0, 20.0 ],
 					"text" : "Metro",
@@ -231,7 +295,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 357.0, 529.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1106.0, 297.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 244.0, 247.5, 61.0, 20.0 ],
 					"text" : "Overdrive",
@@ -245,7 +309,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 336.5, 555.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1085.5, 323.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 176.5, 247.5, 35.0, 20.0 ],
 					"text" : "LPF",
@@ -259,7 +323,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 347.0, 558.5, 150.0, 20.0 ],
+					"patching_rect" : [ 1096.0, 326.5, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 109.0, 247.5, 35.0, 20.0 ],
 					"text" : "Pitch",
@@ -340,18 +404,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-47",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 156.0, 123.0, 104.0, 22.0 ],
-					"text" : "setTimeScale 100"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-12",
 					"maxclass" : "button",
 					"numinlets" : 1,
@@ -369,8 +421,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 147.0, 496.0, 135.0, 22.0 ],
-					"text" : "setFillColor $1 $2 $3 $4"
+					"patching_rect" : [ 147.0, 496.0, 113.0, 22.0 ],
+					"text" : "fillcolor $1 $2 $3 $4"
 				}
 
 			}
@@ -396,16 +448,16 @@
 					"patching_rect" : [ 743.0, 288.0, 56.0, 22.0 ],
 					"restore" : 					{
 						"gain~" : [ 104 ],
-						"gain~[1]" : [ 114 ],
+						"gain~[1]" : [ 118 ],
 						"live.tab" : [ 7.0 ],
-						"multislider" : [ 1.0, 0.526785714285714, 0.0, 0.0, 0.866071428571429, 0.0, 0.0, 0.383928571428571, 0.0, 0.0, 0.848214285714286, 0.0, 0.383928571428571, 0.0, 0.508928571428571, 0.0 ],
-						"multislider[1]" : [ 1.0, 0.666666666666667, 0.847222222222222, 0.486111111111111, 0.708333333333333, 0.513888888888889, 0.388888888888889, 0.208333333333333, 0.555555555555556, 1.0, 0.430555555555556, 0.638888888888889, 0.75, 0.583333333333333, 0.5, 0.277777777777778 ],
-						"number" : [ 150 ],
+						"multislider" : [ 1.0, 0.526785714285714, 0.0, 0.0, 0.4375, 0.794642857142857, 0.0, 0.848214285714286, 0.544642857142857, 0.205357142857143, 0.133928571428571, 0.419642857142857, 0.080357142857143, 0.633928571428571, 0.169642857142857, 0.9375 ],
+						"multislider[1]" : [ 1.0, 0.276785714285714, 0.294642857142857, 0.486111111111111, 1.0, 0.741071428571429, 0.388888888888889, 0.208333333333333, 0.555555555555556, 1.0, 0.430555555555556, 0.638888888888889, 0.75, 0.583333333333333, 0.5, 0.277777777777778 ],
+						"number" : [ 116 ],
 						"number[1]" : [ 101 ],
 						"number[2]" : [ 56 ],
 						"number[3]" : [ 60.0 ],
 						"number[4]" : [ 259.0 ],
-						"number[5]" : [ 0.3 ]
+						"number[5]" : [ 0.6 ]
 					}
 ,
 					"text" : "autopattr",
@@ -621,8 +673,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 279.0, 265.0, 40.0, 22.0 ],
-					"text" : "*~ 20."
+					"patching_rect" : [ 279.0, 265.0, 34.0, 22.0 ],
+					"text" : "*~ 9."
 				}
 
 			}
@@ -722,8 +774,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.86328125},{\"x\":1,\"y\":0.921875,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9863677024841309,0.07851040363311768,0.14614121615886688],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":250,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.88671875},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9858206510543823,0,0.03928174450993538,1],\"strokeColor\":[0.6936665773391724,0.20450055599212646,0.18808914721012115,1],\"bgColor\":[0.3784264326095581,0,0.004848844837397337,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":192,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-27",
 					"jsarguments" : [ "@autooutput", "false" ],
 					"maxclass" : "jsui",
@@ -740,8 +792,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0.0625,\"cp\":0.203125},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9710096120834351,1,0.2226260006427765],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":100,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.84765625},{\"x\":0.046875,\"y\":0.484375,\"cp\":1},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9141254425048828,0.8815518617630005,0.036915358155965805,1],\"strokeColor\":[0.7153334617614746,0.6351959705352783,0.13477502763271332,1],\"bgColor\":[0.3105471134185791,0.18168997764587402,0.004489674232900143,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":192,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-26",
 					"jsarguments" : [ "@autooutput", "false" ],
 					"maxclass" : "jsui",
@@ -758,8 +810,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.4765625},{\"x\":0,\"y\":0.53125,\"cp\":0.5},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.30732476711273193,1,0.2099267542362213],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":250,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.5234375},{\"x\":0,\"y\":0.59375,\"cp\":0.203125},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.14757798612117767,0.9414151310920715,0.021448252722620964,1],\"strokeColor\":[0.2971669137477875,0.754191517829895,0.240335613489151,1],\"bgColor\":[0.060586340725421906,0.3280918002128601,0.0032626264728605747,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":192,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-25",
 					"jsarguments" : [ "@autooutpu", "false" ],
 					"maxclass" : "jsui",
@@ -939,7 +991,7 @@
 					"maxclass" : "panel",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 445.0, 529.0, 128.0, 128.0 ],
+					"patching_rect" : [ 1194.0, 297.0, 128.0, 128.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 17.5, 16.5, 331.0, 507.0 ]
 				}
@@ -950,13 +1002,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-6", 0 ],
 					"source" : [ "obj-1", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 0 ],
-					"source" : [ "obj-10", 0 ]
 				}
 
 			}
@@ -976,6 +1021,30 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"order" : 2,
+					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-26", 0 ],
+					"order" : 1,
+					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"order" : 0,
+					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-9", 1 ],
 					"source" : [ "obj-14", 0 ]
 				}
@@ -985,6 +1054,30 @@
 				"patchline" : 				{
 					"destination" : [ "obj-4", 1 ],
 					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"order" : 2,
+					"source" : [ "obj-16", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-26", 0 ],
+					"order" : 1,
+					"source" : [ "obj-16", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"order" : 0,
+					"source" : [ "obj-16", 0 ]
 				}
 
 			}
@@ -1029,6 +1122,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-4", 2 ],
 					"source" : [ "obj-21", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"source" : [ "obj-23", 0 ]
 				}
 
 			}
@@ -1201,7 +1301,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-26", 0 ],
+					"destination" : [ "obj-16", 0 ],
 					"source" : [ "obj-47", 0 ]
 				}
 
@@ -1232,6 +1332,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"order" : 0,
+					"source" : [ "obj-7", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-23", 0 ],
+					"order" : 1,
 					"source" : [ "obj-7", 0 ]
 				}
 

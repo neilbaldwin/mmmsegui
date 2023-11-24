@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 153.0, 124.0, 412.0, 391.0 ],
+		"rect" : [ 34.0, 79.0, 422.0, 394.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -40,12 +40,36 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 710.0, 245.0, 115.0, 22.0 ],
+					"text" : "bgcolor $1 $2 $3 $4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-6",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 432.0, 245.0, 75.0, 22.0 ],
+					"text" : "autooutput 0"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-23",
 					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 121.0, 61.0, 150.0, 47.0 ],
+					"patching_rect" : [ 567.0, 316.0, 150.0, 47.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 50.0, 341.0, 20.0 ],
 					"text" : "Output of each MMMSEGUI mapped to pitch of rect~ oscillator"
@@ -61,7 +85,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 53.0, 29.0, 208.0, 60.0 ],
+					"patching_rect" : [ 519.0, 70.0, 208.0, 60.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 19.0, 19.0, 353.0, 24.0 ],
 					"text" : "Sequenced Pitch Envelopes with MMMSEGUI"
@@ -165,6 +189,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-5",
+					"int" : 1,
 					"maxclass" : "gswitch2",
 					"numinlets" : 2,
 					"numoutlets" : 2,
@@ -214,12 +239,12 @@
 					"outlettype" : [ "", "", "", "" ],
 					"patching_rect" : [ 497.0, 179.0, 56.0, 22.0 ],
 					"restore" : 					{
-						"number" : [ 320 ],
-						"number[1]" : [ 142 ],
-						"number[2]" : [ 57 ],
+						"number" : [ 130 ],
+						"number[1]" : [ 754 ],
+						"number[2]" : [ 20 ],
 						"number[3]" : [ 16 ],
 						"toggle" : [ 1 ],
-						"toggle[1]" : [ 1 ]
+						"toggle[1]" : [ 0 ]
 					}
 ,
 					"text" : "autopattr",
@@ -311,8 +336,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.484375},{\"x\":0,\"y\":0.5,\"cp\":0.5},{\"x\":0.7715679375000001,\"y\":0.5,\"cp\":0.5},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9859696626663208,0,0.04081225395202637],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":160,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.5},{\"x\":0.46875,\"y\":0.171875,\"cp\":0.5},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.11463694274425507,0.840853214263916,0.9134190678596497,0.5],\"strokeColor\":[0.8,0.8,0.8,0.6],\"bgColor\":[0.5271486043930054,0,0.14758330583572388,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":65,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-98",
 					"maxclass" : "jsui",
 					"numinlets" : 1,
@@ -414,8 +439,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.66796875},{\"x\":0,\"y\":0,\"cp\":0.125},{\"x\":1,\"y\":0.96875,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9859696626663208,0,0.04081225395202637],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":160,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":1,\"cp\":0.83984375},{\"x\":0,\"y\":0,\"cp\":0.46875},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.11463694274425507,0.840853214263916,0.9134190678596497,0.5],\"strokeColor\":[0.8,0.8,0.8,0.6],\"bgColor\":[0.5271486043930054,0,0.14758330583572388,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":65,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-85",
 					"maxclass" : "jsui",
 					"numinlets" : 1,
@@ -444,8 +469,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0.484375,\"cp\":0.5078125},{\"x\":0,\"y\":0,\"cp\":0.265625},{\"x\":0.45811382300000036,\"y\":0.65625,\"cp\":0.5},{\"x\":1,\"y\":0.546875,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9859696626663208,0,0.04081225395202637],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":160,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0.953125,\"cp\":0.78515625},{\"x\":0,\"y\":0.578125,\"cp\":0.04296875},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.11463694274425507,0.840853214263916,0.9134190678596497,0.5],\"strokeColor\":[0.8,0.8,0.8,0.6],\"bgColor\":[0.5271486043930054,0,0.14758330583572388,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":65,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-83",
 					"maxclass" : "jsui",
 					"numinlets" : 1,
@@ -490,8 +515,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 128.0, 152.0, 97.0, 22.0 ],
-					"text" : "setTimeScale $1"
+					"patching_rect" : [ 128.0, 152.0, 76.0, 22.0 ],
+					"text" : "timescale $1"
 				}
 
 			}
@@ -714,8 +739,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 102.0, 84.0, 135.0, 22.0 ],
-					"text" : "setFillColor $1 $2 $3 $4"
+					"patching_rect" : [ 102.0, 98.0, 113.0, 22.0 ],
+					"text" : "fillcolor $1 $2 $3 $4"
 				}
 
 			}
@@ -745,8 +770,8 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0.453125,\"cp\":0.40234375},{\"x\":0.23261948437500035,\"y\":0.984375,\"cp\":0.5},{\"x\":0.640625,\"y\":0.015625,\"cp\":0.5},{\"x\":1,\"y\":0.53125,\"cp\":0.5}]" ], [ "loadParameters", "{\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideHandles\":true,\"autoOutput\":false,\"mouseSpeed\":1,\"nodeSize\":6,\"lineWidth\":1,\"curveFillColor\":[0.9859696626663208,0,0.04081225395202637],\"curveFillAlpha\":0.3,\"curveStrokeAlpha\":0.6,\"timeScale\":160,\"curveClickTolerance\":8}" ] ],
-					"filename" : "mmmsegui.js",
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.13671875},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.11463694274425507,0.840853214263916,0.9134190678596497,0.5],\"strokeColor\":[0.8,0.8,0.8,0.6],\"bgColor\":[0.5271486043930054,0,0.14758330583572388,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":65,\"autoOutput\":0,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"filename" : "Macintosh HD:/Users/neilbaldwin/Sync/Max/PLAYGROUND/MMMSEGUI/mmmsegui.js",
 					"id" : "obj-1",
 					"maxclass" : "jsui",
 					"numinlets" : 1,
@@ -859,6 +884,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-18", 0 ],
+					"order" : 1,
+					"source" : [ "obj-16", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-2", 0 ],
+					"order" : 0,
 					"source" : [ "obj-16", 0 ]
 				}
 
@@ -866,7 +900,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-13", 0 ],
-					"source" : [ "obj-18", 0 ]
+					"source" : [ "obj-2", 0 ]
 				}
 
 			}
@@ -962,6 +996,38 @@
 				"patchline" : 				{
 					"destination" : [ "obj-30", 0 ],
 					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"order" : 3,
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-83", 0 ],
+					"order" : 2,
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-85", 0 ],
+					"order" : 1,
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-98", 0 ],
+					"order" : 0,
+					"source" : [ "obj-6", 0 ]
 				}
 
 			}
