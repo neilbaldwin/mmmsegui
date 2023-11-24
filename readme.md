@@ -1,6 +1,6 @@
 # MMMSEGUI
 
-![[img/mmmsegui01.png]]
+![mmsegui](img/mmmsegui01.png)
 
 MMMSEGUI is a multi-segment graph editor written in JS/JSUI/MGraphics for Cycling 74's Max platform.
 ## Rationale
@@ -26,9 +26,7 @@ For any previous users please read the following section regarding the November 
 
 If you like my work and use it or learn from it, please consider supporting me or just a donation to say thanks:
 
-![[img/buymeabounty.png|160]]
-
-<a href="https://www.buymeacoffee.com/neilbaldwi3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Bounty" style="height: 40px !important;" ></a>
+<a href="https://www.buymeacoffee.com/neilbaldwi3" target="_blank"><img src="img/buymeabounty.png" alt="Buy Me A Bounty" style="height: 40px !important;" ></a>
 
 ## Important - Major Update and Refactoring November 2023
 
