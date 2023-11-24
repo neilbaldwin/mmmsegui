@@ -1,6 +1,6 @@
 # MMMSEGUI
 
-![mmsegui](img/mmmsegui.gif)
+<img src="img/mmmsegui.gif" width="50%" margin-left="auto" margin-right="auto" display="block">
 
 MMMSEGUI is a multi-segment graph editor written in JS/JSUI/MGraphics for Cycling 74's Max platform.
 ## Rationale
