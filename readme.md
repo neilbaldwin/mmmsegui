@@ -25,8 +25,11 @@ For any previous users please read the following section regarding the November 
 ## Support My Work
 
 If you like my work and use it or learn from it, please consider supporting me or just a donation to say thanks:
+
 ![[img/buymeabounty.png|160]]
+
 <a href="https://www.buymeacoffee.com/neilbaldwi3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Bounty" style="height: 40px !important;" ></a>
+
 ## Important - Major Update and Refactoring November 2023
 
 A soft apology to any existing users, especially if you've incorporated MMMSEGUI into any of your own projects and patchers. This update has **MAJOR** changes:
