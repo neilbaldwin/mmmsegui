@@ -239,19 +239,19 @@ If you want to create your own output format, look towards the bottom of the `mm
 
 ```javascript
 this.outputList = function() {
-	var out = [];
-	// Add first node to output list using a time delta of zero
-	out.push(1-this.nodeList[0].y, 0.0, 0.0);
-	for (n = 1; n <= this.nodeCount-1; n++) {
-		// Add next node Y value
-		out.push(1-this.nodeList[n].y);
-		// Add node delta time
-		out.push((this.nodeList[n].x - this.nodeList[n-1].x) * this.timeScale)
-		// Add node curve factor
-		out.push((this.nodeList[n-1].cp * 1.998) - 0.999);
-	}
-	// Send output list to first outlet
-	this.outputFlag = false;
+  var out = [];
+  // Add first node to output list using a time delta of zero
+  out.push(1-this.nodeList[0].y, 0.0, 0.0);
+  for (n = 1; n <= this.nodeCount-1; n++) {
+    // Add next node Y value
+    out.push(1-this.nodeList[n].y);
+    // Add node delta time
+    out.push((this.nodeList[n].x - this.nodeList[n-1].x) * this.timeScale)
+    // Add node curve factor
+    out.push((this.nodeList[n-1].cp * 1.998) - 0.999);
+  }
+  // Send output list to first outlet
+  this.outputFlag = false;
 return out;
 }
 ```
@@ -267,19 +267,19 @@ The basic code for interpreting the `@parameters` follow this form. Put this in 
 
 ```javascript
 jsarguments.filter(function(arg) {
-	if (arg[0] == "@") {
-		var val = jsarguments[jsarguments.indexOf(arg)+1]
-		switch (arg) {
-			case "@nodesize":
-				mmmsegui.setNodeSize(val)
-				break;
-			case "@timescale":
-				mmmsegui.setTimeScale(val)
-				break;
-			default:
-				break;
-		}
-	}
+  if (arg[0] == "@") {
+    var val = jsarguments[jsarguments.indexOf(arg)+1]
+    switch (arg) {
+      case "@nodesize":
+        mmmsegui.setNodeSize(val)
+        break;
+      case "@timescale":
+        mmmsegui.setTimeScale(val)
+        break;
+      default:
+        break;
+    }
+  }
 });
 ```
 
