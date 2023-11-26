@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 44.0, 79.0, 628.0, 753.0 ],
+		"rect" : [ 44.0, 79.0, 641.0, 738.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,45 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-55",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 286.999998927116394, 179.333333313465118, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 326.999998927116394, 183.066666662693024, 69.0, 20.0 ],
+					"text" : "Curve Only"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "toggle",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 904.0, 485.0, 24.0, 24.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 403.399999737739563, 182.066666662693024, 22.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-37",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 904.0, 526.0, 77.0, 22.0 ],
+					"text" : "curveonly $1"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-47",
 					"linecount" : 2,
@@ -984,7 +1023,7 @@
 					"patching_rect" : [ -25.0, 498.0, 464.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 80.0, 420.0, 480.999998927116394, 22.0 ],
-					"text" : "1 0 0 0.385355 1.820757 -0.58946 0 2.179243 0.419961"
+					"text" : "1 0 0 0.583215 401.001298 -0.26438 0 598.998702 -0.656222"
 				}
 
 			}
@@ -1115,7 +1154,7 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.20497507270461066},{\"x\":0.4551891285140564,\"y\":0.614644684729064,\"cp\":0.7101905157576105},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9568424224853516,1,0.04043840989470482,0.2780864876760563],\"strokeColor\":[0.9827331900596619,0.9970756769180298,0.2957916557788849,1],\"bgColor\":[0.298045814037323,0.3204701542854309,0.006427820771932602,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":4,\"autoOutput\":true,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.3676776069796428},{\"x\":0.4010012979743781,\"y\":0.4167850947526244,\"cp\":0.17156062674342676},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9847018718719482,0,0.9486105442047119,0.1932218309859155],\"strokeColor\":[0.983896017074585,0,0.9455199241638184,1],\"bgColor\":[0.1,0.1,0.1,1],\"nodeSize\":4,\"lineWidth\":1.6,\"padding\":8,\"timeScale\":1000,\"autoOutput\":true,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":0,\"nodesVisible\":1,\"mouseSpeed\":1,\"curveClickTolerance\":8,\"curveOnly\":0}" ] ],
 					"filename" : "mmmsegui.js",
 					"id" : "obj-8",
 					"maxclass" : "jsui",
@@ -1268,6 +1307,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
 					"source" : [ "obj-36", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"source" : [ "obj-37", 0 ]
 				}
 
 			}
@@ -1496,6 +1542,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-71", 0 ],
 					"source" : [ "obj-84", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-37", 0 ],
+					"source" : [ "obj-9", 0 ]
 				}
 
 			}

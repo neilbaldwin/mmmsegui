@@ -105,6 +105,7 @@ Customisation is done via Max message objects. For data type see the **Notes** c
 | `autohidenodes` | Automatically hide nodes when mouse not in JSUI window | 0/1, default : 1 |
 | `nodesvisible` | Override to make nodes always visible (or not!) | 0/1, default : 0 |
 | `mousespeed` | Mouse movement scaling when dragging nodes and curves | Default 1.0 |
+| `curveOnly` | Only draws the curve stroke, unfilled | Default 0 |
 
 #### Color Messages
 For the color messages that have the RGBA data type there are 4 values, so your message will look like: `[fillcolor $1 $2 $3 $4]` where $1 is the red value, $2 is the green value, $3 is the blue value and $4 is the alpha value. This is standard RGBA format in Max and is the output from `[colorpicker @compatibility 0]` or `[swatch]` etc.

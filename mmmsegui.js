@@ -53,7 +53,8 @@ function Mmmsegui (parent) {
       "autoHideNodes": this.autoHideNodes,
       "nodesVisible" : this.nodesVisible,
       "mouseSpeed": this.mouseSpeed,
-      "curveClickTolerance": this.curveClickTolerance
+      "curveClickTolerance": this.curveClickTolerance,
+      "curveOnly": this.curveOnly
     }
     return sp
   }
@@ -75,6 +76,7 @@ function Mmmsegui (parent) {
     this.nodesVisible = lp.nodesVisible;
     this.mouseSpeed = lp.mouseSpeed;
     this.curveClickTolerance = lp.curveClickTolerance;
+    this.curveOnly = lp.curveOnly
   }
 
   // Nodes and curves use normalised coordinates
@@ -139,11 +141,13 @@ function Mmmsegui (parent) {
     }
 
     // Fix for filled curve as start and end Y positions can be different
-    mgraphics.line_to(this.gw + this.padding, this.gh + this.padding);
-    mgraphics.line_to(this.padding, this.gh + this.padding);    
-    mgraphics.close_path();
-    mgraphics.set_source_rgba(this.fillColor);    
-    mgraphics.fill_preserve();
+    if (!this.curveOnly) {
+      mgraphics.line_to(this.gw + this.padding, this.gh + this.padding);
+      mgraphics.line_to(this.padding, this.gh + this.padding);    
+      mgraphics.close_path();
+      mgraphics.set_source_rgba(this.fillColor);    
+      mgraphics.fill_preserve();  
+    }
     mgraphics.set_source_rgba(this.strokeColor);
     mgraphics.set_line_width(this.lineWidth);
     mgraphics.stroke();
@@ -765,6 +769,10 @@ function Mmmsegui (parent) {
     if (this.autoOutput) { this.outputFlag = true };
   }
 
+  this.setCurveOnly = function(c) {
+    this.curveOnly = clamp(c, 0, 1)
+  }
+
   // Clear graph
   this.initNodeList = function() {
     // Create initial 'empty' node list
@@ -816,6 +824,7 @@ function Mmmsegui (parent) {
   this.clickedCurve = null;
   this.clickedCurveIndex = 0.0;
   this.curveClickTolerance = 8;
+  this.curveOnly = 0;
   this.outputFlag = false;
   this.MX = 0;
   this.MY = 0;
@@ -978,6 +987,11 @@ function graphfromcurve() {
 
 function mousespeed(s) {
   mmmsegui.setMouseSpeed(s);
+}
+
+function curveonly(c) {
+  mmmsegui.setCurveOnly(c);
+  refresh();
 }
 
 function nodelist() {
