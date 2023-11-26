@@ -389,8 +389,8 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 567.0, 570.0, 133.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 154.399999737739563, 635.20000547170639, 138.59999543428421, 22.0 ],
-					"text" : "graph 0. 0. 0.2 1. 1. 0.5"
+					"presentation_rect" : [ 154.399999737739563, 635.20000547170639, 133.0, 22.0 ],
+					"text" : "graph 0. 0. 1.5 1. 1. 0.5"
 				}
 
 			}
@@ -984,7 +984,7 @@
 					"patching_rect" : [ -25.0, 498.0, 464.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 80.0, 420.0, 480.999998927116394, 22.0 ],
-					"text" : "1 0 0 0.442843 6.148806 0 0 7.151194 0.466221"
+					"text" : "1 0 0 0.385355 1.820757 -0.58946 0 2.179243 0.419961"
 				}
 
 			}
@@ -1115,7 +1115,7 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.5},{\"x\":0.4623162630385487,\"y\":0.5571569484536094,\"cp\":0.7333438530051195},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9863569140434265,0.07550154626369476,0.14829544723033905,0.3260618397887324],\"strokeColor\":[0.9867282509803772,0.15722355246543884,0.1823844313621521,0.5],\"bgColor\":[0.3022575080394745,0,0.0032085536513477564,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":13.3,\"autoOutput\":1,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
+					"embedstate" : [ [ "loadNodes", "[{\"x\":0,\"y\":0,\"cp\":0.20497507270461066},{\"x\":0.4551891285140564,\"y\":0.614644684729064,\"cp\":0.7101905157576105},{\"x\":1,\"y\":1,\"cp\":0.5}]" ], [ "loadParameters", "{\"fillColor\":[0.9568424224853516,1,0.04043840989470482,0.2780864876760563],\"strokeColor\":[0.9827331900596619,0.9970756769180298,0.2957916557788849,1],\"bgColor\":[0.298045814037323,0.3204701542854309,0.006427820771932602,1],\"nodeSize\":4,\"lineWidth\":1,\"padding\":8,\"timeScale\":4,\"autoOutput\":true,\"nodeHighlighting\":true,\"curveHighlighting\":true,\"autoHideNodes\":true,\"nodesVisible\":false,\"mouseSpeed\":1,\"curveClickTolerance\":8}" ] ],
 					"filename" : "mmmsegui.js",
 					"id" : "obj-8",
 					"maxclass" : "jsui",

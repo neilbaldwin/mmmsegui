@@ -168,7 +168,7 @@ The first command, `graph`, lets you create a new graph with normalised values:
 ```
 
 * `xn` is the normalised position of the node along the X axis, 0.0 to 1.0, left-to-right
-* `yn` is the normalised magnitude in the Y axis, 0.0 to 1.0, bottom-to-top
+* `yn` is the normalised magnitude in the Y axis, 0.0 to 1.0, top-to-bottom
 * `cn` is the  normalised curve value, 0.0 to 1.0, 0.5 is the middle (linear curve)
 
 This data form parallels the MMMSEGUI internal data form. It's a more simple structure than `graphfromcurve` as it's easier to visualise and because the X values are normalised you can define a graph independent of it's `timeScale` setting.
@@ -182,7 +182,7 @@ You can also send MMMSEGUI a `[graphfromcurve]` message to define a graph numeri
 
 The parameters are slightly different from the `graph` command in order to be compatible with `[curve~]`
 
-* `yn` is the Y axis position of the node but is inverted, 0.0 is the top, 1.0 is the bottom
+* `yn` is the Y axis position of the node but is inverted, 1.0 is the top, 0.0 is the bottom
 * `dn` is the delta time in ms from the previous node
 * `cn` is the  `curve~` curve shape value, -0.999 to 0.999
 
