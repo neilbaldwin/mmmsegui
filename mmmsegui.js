@@ -738,8 +738,7 @@ function Mmmsegui (parent) {
     // Build temporary list first as need to calculate total curve time in MS
     for (var n = 0; n < nlist.length; n+=3) {
       var y = clamp(nlist[n], 0.0, 1.0)
-      dt += (clamp(nlist[n+1], 0.0, 1.0))
-      var x = dt
+      var x = dt += nlist[n+1]
       var c = clamp(nlist[n+2], -0.999, 0.999) / 1.998 + 0.5;
       // post(list[n+2],c)
       tempNodeList.push([y, x, c])
