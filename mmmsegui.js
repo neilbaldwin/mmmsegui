@@ -54,7 +54,8 @@ function Mmmsegui (parent) {
       "nodesVisible" : this.nodesVisible,
       "mouseSpeed": this.mouseSpeed,
       "curveClickTolerance": this.curveClickTolerance,
-      "curveOnly": this.curveOnly
+      "curveOnly": this.curveOnly,
+      "phasorMode": this.phasorMode
     }
     return sp
   }
@@ -76,7 +77,8 @@ function Mmmsegui (parent) {
     this.nodesVisible = lp.nodesVisible;
     this.mouseSpeed = lp.mouseSpeed;
     this.curveClickTolerance = lp.curveClickTolerance;
-    this.curveOnly = lp.curveOnly
+    this.curveOnly = lp.curveOnly;
+    this.phasorMode = lp.phasorMode;
   }
 
   // Nodes and curves use normalised coordinates
@@ -255,17 +257,37 @@ function Mmmsegui (parent) {
 
   // Set Y position of node
   this.setNodeY = function(n, f) {
-    this.nodeList[n].y = clamp(this.nodeList[n].y - f, 0.0, 1.0);
+    if (this.phasorMode == 1) {
+      if ((n == 0) || (n == this.nodeCount - 1)) { return; }
+      var py = this.nodeList[n-1].y;
+      var ny = this.nodeList[n+1].y;
+      this.nodeList[n].y = clamp(this.nodeList[n].y - f, ny, py);  
+    } else {
+      this.nodeList[n].y = clamp(this.nodeList[n].y - f, 0.0, 1.0);
+    }
   }
 
   // Adjust Y posiiton of curve control point
   this.setCurveY = function(n, f) {
-    var c1 = this.nodeList[n].y - f;
-    var c2 = this.nodeList[n+1].y - f;
-    if ((c1 < 0.0) || (c1 > 1.0) || (c2 < 0.0) || (c2 > 1.0)) { return };
+    if (this.phasorMode == 1) {
+      if ((n == 0) || (n == this.nodeCount - 1)) { return; }
+      var c1 = this.nodeList[n].y - f;
+      var c2 = this.nodeList[n+1].y - f;
+      var p1 = this.nodeList[n-1].y;
+      var n1 = this.nodeList[n + 1 + 1].y
+      // if ((c1 < 0.0) || (c1 > 1.0) || (c2 < 0.0) || (c2 > 1.0)) { return };
+      if ((c1 < 0.0) || (c1 > p1)) { return };
+      
+      if ((c2 < n1) || (c2 > 1.0)) { return };
+    
+    } else {
+      var c1 = this.nodeList[n].y - f;
+      var c2 = this.nodeList[n+1].y - f;
+      if ((c1 < 0.0) || (c1 > 1.0) || (c2 < 0.0) || (c2 > 1.0)) { return };
+    }
     this.nodeList[n].y = c1;
-    this.nodeList[n+1].y = c2;
-  }
+    this.nodeList[n+1].y = c2;  
+}
 
   // Adjust X position of curve control point
   this.setCurveX = function(n, f) {
@@ -772,13 +794,24 @@ function Mmmsegui (parent) {
     this.curveOnly = clamp(c, 0, 1)
   }
 
+  this.setPhasorMode = function(m) {
+    this.phasorMode = clamp(m, 0, 1);
+  }
+
   // Clear graph
   this.initNodeList = function() {
     // Create initial 'empty' node list
-    this.nodeList = [
-      new Node(0.0, 0.0, 0.5),
-      new Node(1.0, 1.0, 0.5)
-    ]
+    if (this.phasorMode == 1) {
+      this.nodeList = [
+        new Node(0.0, 1.0, 0.5),
+        new Node(1.0, 0.0, 0.5)
+      ]  
+    } else {
+      this.nodeList = [
+        new Node(0.0, 0.0, 0.5),
+        new Node(1.0, 1.0, 0.5)
+      ]  
+    }
     this.nodeCount = this.nodeList.length;
     if (this.autoOutput) { this.outputFlag = true };
   }
@@ -1028,6 +1061,10 @@ function getvalueattime(t) {
 
 function msg_float(t) {
   mmmsegui.outputValueAtPosition(t);
+}
+
+function setphasormode(m) {
+  mmmsegui.setPhasorMode(m);
 }
 
 //----------------------------------------------------------------------------

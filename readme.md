@@ -53,6 +53,13 @@ The entire documentation has been updated but here are the highlights:
 * you can now move a graph segment in both the X and Y axis (hold SHIFT and drag the curve segment), previously you could only move a segment in the  Y axis.
 * two new commands to sample the graph Y value at a point in time, `getvalue` uses a normalised value as the X position where `getvalueattime` lets you specify a time in ms.
 * some new commands to modify position and control point parameters for individual nodes
+
+## Updates
+
+#### 13/02/2024
+
+Added "Phasor Mode" - a special mode with restrictions to use the the `phasor~` object.
+
 ## Content and Installation
 
 * `mmmsegui.js` is the main JSUI file you need to use MMMSEGUI.
@@ -106,11 +113,29 @@ Customisation is done via Max message objects. For data type see the **Notes** c
 | `nodesvisible` | Override to make nodes always visible (or not!) | 0/1, default : 0 |
 | `mousespeed` | Mouse movement scaling when dragging nodes and curves | Default 1.0 |
 | `curveOnly` | Only draws the curve stroke, unfilled | Default 0 |
+| `phasorMode` | Special mode for use with `phasor~` - see below | Default 0 |
 
 #### Color Messages
 For the color messages that have the RGBA data type there are 4 values, so your message will look like: `[fillcolor $1 $2 $3 $4]` where $1 is the red value, $2 is the green value, $3 is the blue value and $4 is the alpha value. This is standard RGBA format in Max and is the output from `[colorpicker @compatibility 0]` or `[swatch]` etc.
 #### Auto Output
 Auto Output is on by default (turn it off with `[autooutput 0]`)which means anything you do that changes the nodes, curves or timescale will cause MMMSEGUI to output the current graph as a `curve~` formatted list. If you set Auto Output to off, nothing will be output from MMMSEGUI until you send a `bang` message to its inlet. The only exception to this is the `getvalue` and `getvalueattime` commands (see Command Messages), for obvious reasons. Sending messages to MMMSEGUI that only change the graphical *look* of the graph will not cause output of node list.
+
+### Phasor Mode
+"Phasor Mode" is a feature requested by a few members of the Max Discord channel for use with the `phasor~`
+object. In Phasor Mode there are a few changes and restrictions to the way MMMSEGUI works:
+
+* The graph Y position starts at 0.0 (bottom) and ends at 1.0 (top)
+* The first and last node Y positions are fixed (0.0 and 1.0 respectively) and cannot be moved
+* Each node Y position is restricted by the preceding and following nodes: a node cannot be moved higher than the next node or lower than the previous one
+
+#### Selecting Phasor Mode
+
+The message `setphasormode` is used to turn Phasor Mode on/off. 0 turns it off (default) and 1 turns it on.
+
+However you must also then use the `clear` message to reset the graph which means if you intend to use Phasor Mode on a MMMSEGUI object, select Phasor Mode first, then clear the graph before setting nodes etc.
+
+Clearing the graph is necessary so that the graph starts with nodes that respect the restrictions of Phasor Mode. I thought about just adding some validation code so that you could switch between Phasor Mode on/off but that would also modify your graph. Clearing the graph is simpler and easier.
+
 ## Command Messages
 
 In addition to customisation there are some messages that control MMMSEGUI:
