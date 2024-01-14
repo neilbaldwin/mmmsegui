@@ -1060,7 +1060,7 @@ function getvalueattime(t) {
 }
 
 function msg_float(t) {
-  mmmsegui.outputValueAtPosition(t);
+  //mmmsegui.outputValueAtPosition(t);
 }
 
 function setphasormode(m) {
