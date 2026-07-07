@@ -1,2 +1,0 @@
-
-![image](img/buymeabounty.png)
